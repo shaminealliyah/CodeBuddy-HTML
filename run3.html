@@ -1,0 +1,513 @@
+<!-- run3.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Interactive Learning Module - Try It Yourself 3</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(to bottom right,#edd2f3,#e6c1ef);
+    min-height:100vh;
+}
+
+.navbar{
+    width:100%;
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#ff66b3;
+}
+
+.menu{
+    display:flex;
+    gap:45px;
+    align-items:center;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#222;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ff66b3;
+}
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-btn{
+    cursor:pointer;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    transition:0.3s;
+}
+
+.dropdown-btn:hover{
+    color:#ff66b3;
+}
+
+.dropdown-content{
+    position:absolute;
+    top:40px;
+    left:0;
+    width:220px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+    z-index:9999;
+}
+
+.dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:15px 20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.dropdown-content a:hover{
+    background:#f8d9f0;
+    color:#ff66b3;
+    padding-left:28px;
+}
+
+/* ================= SEARCH RESULTS STYLES ================= */
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 350px;
+    max-height: 450px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-item:hover {
+    background: #f8d9f0;
+}
+
+.search-item-icon {
+    font-size: 22px;
+}
+
+.search-item-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-item-sub {
+    font-size: 11px;
+    color: #888;
+}
+
+.search-item-category {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #ff66b3;
+    color: white;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+    .search-results {
+        width: 300px;
+        right: -20px;
+    }
+    
+    .search-item-title {
+        font-size: 12px;
+    }
+}
+.search-box{
+    background:white;
+    border:2px solid black;
+    border-radius:40px;
+    padding:10px 20px;
+    width:230px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:16px;
+}
+
+.search-icon{
+    font-size:20px;
+}
+
+.main{
+    width:100%;
+    min-height:calc(100vh - 75px);
+    padding:25px 40px;
+}
+
+.top-section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.title{
+    font-size:36px;
+    font-weight:700;
+    color:#111;
+}
+
+.run-btn{
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:5px solid black;
+    background:white;
+    font-size:42px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:20px;
+}
+
+.run-btn:hover{
+    transform:scale(1.08);
+}
+
+.editor-section{
+    display:flex;
+    gap:40px;
+}
+
+.editor-box,
+.output-box{
+    width:48%;
+    height:500px;
+    background:#f5f5f5;
+    padding:25px;
+    border-radius:20px;
+    overflow:hidden;
+}
+
+textarea{
+    width:100%;
+    height:100%;
+    border:none;
+    outline:none;
+    resize:none;
+    background:transparent;
+    font-size:16px;
+    line-height:1.6;
+    overflow:auto;
+    font-family:'Courier New', monospace;
+}
+
+textarea::placeholder{
+    color: rgba(0,0,0,0.25);
+    font-size:16px;
+    font-style:italic;
+}
+
+iframe{
+    width:100%;
+    height:100%;
+    border:none;
+    background:white;
+    border-radius:10px;
+}
+
+.result-message{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:700;
+    text-align:center;
+}
+
+.success{
+    color:green;
+}
+
+.error{
+    color:red;
+}
+
+@media(max-width:1000px){
+    body{overflow:auto;}
+    .navbar{flex-direction:column;height:auto;gap:15px;padding:20px;}
+    .menu{flex-wrap:wrap;justify-content:center;gap:25px;}
+    .title{font-size:28px;}
+    .editor-section{flex-direction:column;}
+    .editor-box, .output-box{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <div class="logo">CodeBuddy HTML</div>
+    <div class="menu">
+        <a href="MAINPAGE.html">Introduction</a>
+        <div class="dropdown">
+            <div class="dropdown-btn">Module ▼</div>
+            <div class="dropdown-content">
+                <a href="index.html">Module 1</a>
+                <a href="page2.html">Module 2</a>
+                <a href="page3.html">Module 3</a>
+                <a href="page4.html">Module 4</a>
+                <a href="page5.html">Module 5</a>
+                <a href="page6.html">Module 6</a>
+                <a href="page7.html">Module 7</a>
+                <a href="page8.html">Module 8</a>
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropdown-btn">Exercise ▼</div>
+            <div class="dropdown-content">
+                <a href="Exercise1.html">Exercise 1</a>
+                <a href="Exercise 2.html">Exercise 2</a>
+		<a href="Exercise3.html">Exercise 3</a>
+		<a href="Exercise4.html">Exercise 4</a>
+		<a href="Exercise5.html">Exercise 5</a>
+		<a href="Exercise6.html">Exercise 6</a>
+		<a href="Exercise7.html">Exercise 7</a>
+		<a href="Exercise8.html">Exercise 8</a>
+
+            </div>
+        </div>
+        <div class="dropdown">
+            <div class="dropdown-btn">Progress ▼</div>
+            <div class="dropdown-content">
+          <a href="progress1.html">Progress 1</a>
+          <a href="progress2.html">Progress 2</a>
+          <a href="progress3.html">Progress 3</a>
+          <a href="progress4.html">Progress 4</a>
+          <a href="progress5.html">Progress 5</a>
+          <a href="progress6.html">Progress 6</a>
+          <a href="progress7.html">Progress 7</a>
+          <a href="progress8.html">Progress 8</a>
+
+            </div>
+        </div>
+        <a href="game (2).html">Game</a>
+    </div>
+    <div class="search-container">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search module, exercise...">
+          <span class="search-icon">🔍</span>
+    </div>
+    <div id="searchResults" class="search-results"></div>
+</div>
+</div>
+
+<div class="main">
+    <div class="top-section">
+        <div class="title">MODULE 3: PERIPHERALS - Interactive Button</div>
+    </div>
+
+    <button class="run-btn" onclick="runCode()">▶</button>
+
+    <div class="editor-section">
+        <div class="editor-box">
+            <textarea id="codeEditor" placeholder='Write your HTML code here...
+
+Example:
+<h1>Click the Button!</h1>
+<button onclick="alert('Hello! You clicked the button!')">
+    Click Me
+</button>'></textarea>
+        </div>
+        <div class="output-box">
+            <iframe id="output"></iframe>
+        </div>
+    </div>
+
+    <div class="result-message" id="resultMessage"></div>
+</div>
+
+<script>
+
+const PROGRESS_VERSION = "module-progress-v1";
+
+function createProgressData() {
+  return {
+    progressVersion: PROGRESS_VERSION,
+    overallProgress: 0,
+    completedExercises: 0,
+    totalExercises: 8,
+    averageScore: 0,
+
+    moduleProgress: {
+      module1: 0,
+      module2: 0,
+      module3: 0,
+      module4: 0,
+      module5: 0,
+      module6: 0,
+      module7: 0,
+      module8: 0
+    },
+
+    quizProgress: {
+      completedQuiz: 0,
+      totalQuiz: 5,
+      currentQuizProgress: 0,
+      averageQuizScore: 0
+    }
+  };
+}
+
+function getProgressData() {
+  const freshProgress = createProgressData();
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (!savedData || savedData.progressVersion !== PROGRESS_VERSION) {
+      return freshProgress;
+    }
+
+    return {
+      ...freshProgress,
+      ...savedData,
+
+      moduleProgress: {
+        ...freshProgress.moduleProgress,
+        ...savedData.moduleProgress
+      },
+
+      quizProgress: {
+        ...freshProgress.quizProgress,
+        ...savedData.quizProgress
+      }
+    };
+  } catch (error) {
+    return freshProgress;
+  }
+}
+
+function saveModule3FinalPage() {
+  const progress = getProgressData();
+
+  progress.moduleProgress.module3 = 100;
+
+  const moduleValues = Object.values(progress.moduleProgress);
+
+  progress.overallProgress = Math.round(
+    moduleValues.reduce(function(total, value) {
+      return total + value;
+    }, 0) / 8
+  );
+
+  localStorage.setItem(
+    "studentProgress",
+    JSON.stringify(progress)
+  );
+}
+
+function runCode(){
+    let code = document.getElementById("codeEditor").value;
+    let output = document.getElementById("output");
+    output.srcdoc = code;
+
+    let result = document.getElementById("resultMessage");
+    
+    let hasButton = code.includes("<button") && code.includes("</button>");
+    let hasAlert = code.includes("alert(");
+    
+    if(hasButton && hasAlert){
+        result.innerHTML = "✅ Correct! Your button has an alert function.";
+        result.className = "result-message success";
+
+        saveModule3FinalPage();
+    }
+    else if(hasButton){
+        result.innerHTML = "⚠️ Good! You have a button. Try adding an alert: onclick='alert(\"message\")'";
+        result.className = "result-message error";
+    }
+    else{
+        result.innerHTML = "❌ Error! Please include a &lt;button&gt; tag with an alert function.";
+        result.className = "result-message error";
+    }
+}
+</script>
+<script src="search.js"></script>
+</body>
+</html>

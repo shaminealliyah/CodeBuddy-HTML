@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Module Progress Dashboard</title>
+
+  <!-- GOOGLE FONT -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: #cfe2f7;
+      color: #111;
+      min-height: 100vh;
+    }
+
+    /* ================= NAVBAR ================= */
+
+.navbar{
+    width:100%;
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#ff66b3;
+}
+
+/* MENU */
+
+.menu{
+    display:flex;
+    gap:45px;
+    align-items:center;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#222;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ff66b3;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-btn{
+    cursor:pointer;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    transition:0.3s;
+}
+
+.dropdown-btn:hover{
+    color:#ff66b3;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown-content{
+    position:absolute;
+    top:40px;
+    left:0;
+    width:220px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+
+    z-index:9999;
+}
+
+.dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:15px 20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.dropdown-content a:hover{
+    background:#f8d9f0;
+    color:#ff66b3;
+    padding-left:28px;
+}
+
+/* ================= SEARCH ================= */
+
+/* ================= SEARCH RESULTS STYLES ================= */
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 350px;
+    max-height: 450px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-item:hover {
+    background: #f8d9f0;
+}
+
+.search-item-icon {
+    font-size: 22px;
+}
+
+.search-item-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-item-sub {
+    font-size: 11px;
+    color: #888;
+}
+
+.search-item-category {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #ff66b3;
+    color: white;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+    .search-results {
+        width: 300px;
+        right: -20px;
+    }
+    
+    .search-item-title {
+        font-size: 12px;
+    }
+}
+
+.search-box{
+    background:white;
+    border:2px solid black;
+    border-radius:40px;
+    padding:10px 20px;
+    width:230px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:16px;
+}
+
+.search-icon{
+    font-size:20px;
+}
+
+
+    /* ================= MAIN SECTION ================= */
+
+    .container {
+      padding: 25px 40px;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 34px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 22px;
+      padding: 18px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .small-card {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .card-title {
+      font-weight: bold;
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .circle {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      background: conic-gradient(#6fd154 70%, #e6e6e6 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .circle::before {
+      content: "";
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .circle span {
+      position: relative;
+      font-size: 16px;
+    }
+
+    .muted-text {
+      font-size: 14px;
+      color: #777;
+      line-height: 1.4;
+    }
+
+    .big-number {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      background-color: #e9e9e9;
+      border-radius: 10px;
+      margin: 10px 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background-color: #6fd154;
+      border-radius: 10px;
+    }
+
+    .icon {
+      font-size: 42px;
+    }
+
+    .orange { color: #ff8c33; }
+    .blue { color: #4f91cc; }
+    .green { color: #5ccf78; }
+
+    .module-progress {
+      grid-column: 1 / 2;
+      min-height: 0;
+      height: auto;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 25px 1fr 2fr 40px;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .progress-row .progress-bar {
+      margin: 0;
+      height: 5px;
+    }
+
+    .percent {
+      color: #5ac747;
+      font-size: 12px;
+    }
+
+    .quiz-card {
+      grid-column: 2 / 4;
+      min-height: 0;
+      height: auto;
+      overflow: visible;
+    }
+
+    .quiz-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .quiz-left {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .quiz-title {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .quiz-score {
+      text-align: right;
+      font-size: 12px;
+    }
+
+    .quiz-score strong {
+      display: block;
+      font-size: 24px;
+      color: black;
+    }
+
+    .quiz-list {
+      margin-top: 5px;
+    }
+
+.quiz-item {
+  display: grid;
+  grid-template-columns: 28px 1fr 170px;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.quiz-item span:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
+
+    .score-blue { color: #2468a8; }
+    .score-green { color: #36b24a; }
+
+    .recent {
+      grid-column: 1 / 4;
+      min-height: 120px;
+      height: auto;
+    }
+
+    .recent-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .recent-header h2 {
+      font-size: 22px;
+    }
+
+    .recent-header a {
+      font-size: 12px;
+      text-decoration: none;
+      color: #2468a8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    th {
+      text-align: left;
+      color: #777;
+      font-weight: normal;
+      padding-bottom: 6px;
+    }
+
+    td {
+      padding: 5px 0;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .badge-blue {
+      background-color: #c9e1ff;
+      color: #2468a8;
+    }
+
+    .badge-green {
+      background-color: #c9ffd2;
+      color: #2ca845;
+    }
+
+    .orange-score {
+      color: #ff7b21;
+      font-weight: bold;
+    }
+
+    .blue-score {
+      color: #2468a8;
+      font-weight: bold;
+    }
+
+    @media (max-width: 900px) {
+      body { overflow: auto; }
+
+      .navbar {
+        height: auto;
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+      }
+
+      .logo { font-size: 26px; }
+
+      .menu {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .menu a,
+      .dropdown-btn {
+        font-size: 14px;
+      }
+
+      .search-box { width: 200px; }
+
+      .search-results {
+        width: 300px;
+        right: -20px;
+      }
+
+      .container { padding: 20px; }
+
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .module-progress,
+      .quiz-card,
+      .recent {
+        grid-column: 1;
+      }
+
+      .recent { overflow-x: auto; }
+      table { min-width: 700px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="logo">CodeBuddy HTML</div>
+
+    <div class="menu">
+      <a href="MAINPAGE.html">Introduction</a>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Module ▼</div>
+        <div class="dropdown-content">
+          <a href="index.html">Module 1</a>
+          <a href="page2.html">Module 2</a>
+          <a href="page3.html">Module 3</a>
+          <a href="page4.html">Module 4</a>
+          <a href="page5.html">Module 5</a>
+          <a href="page6.html">Module 6</a>
+          <a href="page7.html">Module 7</a>
+          <a href="page8.html">Module 8</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Exercise ▼</div>
+        <div class="dropdown-content">
+          <a href="Exercise1.html">Exercise 1</a>
+                <a href="Exercise 2.html">Exercise 2</a>
+		<a href="Exercise3.html">Exercise 3</a>
+		<a href="Exercise4.html">Exercise 4</a>
+		<a href="Exercise5.html">Exercise 5</a>
+		<a href="Exercise6.html">Exercise 6</a>
+		<a href="Exercise7.html">Exercise 7</a>
+		<a href="Exercise8.html">Exercise 8</a>
+            
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Progress ▼</div>
+        <div class="dropdown-content">
+          <a href="progress1.html">Progress 1</a>
+          <a href="progress2.html">Progress 2</a>
+          <a href="progress3.html">Progress 3</a>
+          <a href="progress4.html">Progress 4</a>
+          <a href="progress5.html">Progress 5</a>
+          <a href="progress6.html">Progress 6</a>
+          <a href="progress7.html">Progress 7</a>
+          <a href="progress8.html">Progress 8</a>
+        </div>
+      </div>
+
+      <a href="game (2).html">Game</a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search">
+        <span class="search-icon">🔍</span>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Progress: Module 6</h1>
+
+    <div class="dashboard">
+
+      <div class="card small-card">
+        <div>
+          <div class="card-title">Overall Progress</div>
+          <div class="circle">
+            <span>70%</span>
+          </div>
+        </div>
+
+        <div class="muted-text">
+          You're doing great!<br>
+          Keep going to complete<br>
+          the chapter.
+        </div>
+      </div>
+
+      <div class="card small-card">
+        <div class="icon blue">📋</div>
+
+        <div style="width: 100%;">
+          <div class="card-title">Completed Exercise</div>
+          <div class="big-number">24 / 30</div>
+
+          <div class="progress-bar">
+            <div class="progress-fill" style="width: 80%;"></div>
+          </div>
+
+          <div class="muted-text">80% completed</div>
+        </div>
+      </div>
+
+      <div class="card small-card">
+        <div class="icon orange">🏅</div>
+
+        <div>
+          <div class="card-title">Average Score</div>
+          <div class="big-number">85</div>
+          <div>points</div>
+        </div>
+
+        <div class="icon orange" style="margin-left: auto;">☀</div>
+      </div>
+
+      <div class="card module-progress">
+        <div class="card-title">Module Progress</div>
+
+        <div class="progress-row"><span>📘</span><span>Module 1</span><div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div><span class="percent">100%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 2</span><div class="progress-bar"><div class="progress-fill" style="width: 80%;"></div></div><span class="percent">80%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 3</span><div class="progress-bar"><div class="progress-fill" style="width: 75%;"></div></div><span class="percent">75%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 4</span><div class="progress-bar"><div class="progress-fill" style="width: 90%;"></div></div><span class="percent">90%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 5</span><div class="progress-bar"><div class="progress-fill" style="width: 60%;"></div></div><span class="percent">60%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 6</span><div class="progress-bar"><div class="progress-fill" style="width: 67%;"></div></div><span class="percent">67%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 7</span><div class="progress-bar"><div class="progress-fill" style="width: 95%;"></div></div><span class="percent">95%</span></div>
+        <div class="progress-row"><span>📘</span><span>Module 8</span><div class="progress-bar"><div class="progress-fill" style="width: 59%;"></div></div><span class="percent">59%</span></div>
+      </div>
+
+      <div class="card quiz-card">
+  <div class="quiz-header">
+    <div>
+      <div class="quiz-title">Interactive Game Hub</div>
+
+      <div class="quiz-left">
+        <div class="icon green">🎮</div>
+
+        <div style="width: 300px;">
+          <div class="big-number">
+            <span id="quizQuestionsText">0 / 5</span>
+            <span style="font-size: 14px; font-weight: normal;">
+              questions answered
+            </span>
+          </div>
+
+          <div class="progress-bar">
+            <div
+              class="progress-fill"
+              id="quizProgressFill"
+              style="width: 0%;"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-score">
+      Quiz Average Score
+      <strong id="quizAverageScore">0%</strong>
+    </div>
+  </div>
+
+  <div class="quiz-list">
+    <div class="quiz-item">
+      <span>🧠</span>
+      <span>HTML Basics Quiz</span>
+      <span id="totalQuizPoints" class="score-blue">0 points</span>
+    </div>
+
+    <div class="quiz-item">
+      <span>🕹️</span>
+      <span>Master Catcher</span>
+      <span id="masterCatcherScore" class="score-blue">Not played</span>
+    </div>
+
+    <div class="quiz-item">
+      <span>🏗️</span>
+      <span>Tag Tower</span>
+      <span id="tagTowerScore" class="score-blue">Not played</span>
+    </div>
+
+    <div class="quiz-item">
+      <span>🧩</span>
+      <span>Match-3 HTML</span>
+      <span id="match3HtmlScore" class="score-blue">Not played</span>
+    </div>
+  </div>
+</div>
+
+      <div class="card recent">
+        <div class="recent-header">
+          <h2>Recent Exercises</h2>
+          <a href="run8.html">View all exercises ›</a>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Exercises</th>
+              <th>Topic</th>
+              <th>Description</th>
+              <th>Score</th>
+              <th>Completed</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><span class="badge badge-blue">E1</span></td>
+              <td>Basic HTML Structure</td>
+              <td>Introduction</td>
+              <td>Create a simple HTML page with heading and paragraph</td>
+              <td class="orange-score">80/100</td>
+              <td>March 19, 2026</td>
+            </tr>
+
+            <tr>
+              <td><span class="badge badge-green">E2</span></td>
+              <td>Text Formatting</td>
+              <td>Introduction</td>
+              <td>Use HTML tags to format text: bold, italic, underline</td>
+              <td class="blue-score">64/100</td>
+              <td>March 26, 2026</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const tableRows = document.querySelectorAll("tbody tr");
+
+    const searchData = [
+
+{ title: "Introduction", subtitle: "Start learning HTML basics", category: "Introduction", icon: "🏠", link: "MAINPAGE.html" },
+
+      { title: "Module 1", subtitle: "Basic HTML module", category: "Module", icon: "📘", link: "index.html" },
+      { title: "Module 2", subtitle: "User Interface Programming", category: "Module", icon: "📘", link: "page2.html" },
+      { title: "Module 3", subtitle: "Peripherals", category: "Module", icon: "📘", link: "page3.html" },
+      { title: "Module 4", subtitle: "Software Architectures and MVC", category: "Module", icon: "📘", link: "page4.html" },
+      { title: "Module 5", subtitle: "Psychology and Motor Performance", category: "Module", icon: "📘", link: "page5.html" },
+      { title: "Module 6", subtitle: "Cognitive Aspects", category: "Module", icon: "📘", link: "page6.html" },
+      { title: "Module 7", subtitle: "User Centered Design", category: "Module", icon: "📘", link: "page7.html" },
+      { title: "Module 8", subtitle: "Emergent Interfaces", category: "Module", icon: "📘", link: "page8.html" },
+
+{ title: "Exercise 1", subtitle: "Basic HTML structure and tags", category: "Exercise", icon: "✏️", link: "Exercise1.html" },
+{ title: "Exercise 2", subtitle: "GUI and interactive systems", category: "Exercise", icon: "✏️", link: "Exercise 2.html" },
+{ title: "Exercise 3", subtitle: "HTML content and lists", category: "Exercise", icon: "✏️", link: "Exercise3.html" },
+{ title: "Exercise 4", subtitle: "HTML hyperlinks", category: "Exercise", icon: "✏️", link: "Exercise4.html" },
+{ title: "Exercise 5", subtitle: "Correct HTML errors", category: "Exercise", icon: "✏️", link: "Exercise5.html" },
+{ title: "Exercise 6", subtitle: "HTML best practices", category: "Exercise", icon: "✏️", link: "Exercise6.html" },
+{ title: "Exercise 7", subtitle: "Create a healthy lifestyle webpage", category: "Exercise", icon: "✏️", link: "Exercise7.html" },
+{ title: "Exercise 8", subtitle: "Create a personal portfolio website", category: "Exercise", icon: "✏️", link: "Exercise8.html" },
+
+      { title: "Progress 1", subtitle: "Module 1 progress dashboard", category: "Progress", icon: "📊", link: "progress1.html" },
+      { title: "Progress 2", subtitle: "Module 2 progress dashboard", category: "Progress", icon: "📊", link: "progress2.html" },
+      { title: "Progress 3", subtitle: "Module 3 progress dashboard", category: "Progress", icon: "📊", link: "progress3.html" },
+      { title: "Progress 4", subtitle: "Module 4 progress dashboard", category: "Progress", icon: "📊", link: "progress4.html" },
+      { title: "Progress 5", subtitle: "Module 5 progress dashboard", category: "Progress", icon: "📊", link: "progress5.html" },
+      { title: "Progress 6", subtitle: "Module 6 progress dashboard", category: "Progress", icon: "📊", link: "progress6.html" },
+      { title: "Progress 7", subtitle: "Module 7 progress dashboard", category: "Progress", icon: "📊", link: "progress7.html" },
+      { title: "Progress 8", subtitle: "Module 8 progress dashboard", category: "Progress", icon: "📊", link: "progress8.html" },
+
+      { title: "Game", subtitle: "Interactive quiz game", category: "Game", icon: "🎮", link: "game (2).html" }
+    ];
+
+    searchInput.addEventListener("keyup", function () {
+      const searchText = searchInput.value.toLowerCase().trim();
+      filterTable(searchText);
+      showSearchResults(searchText);
+    });
+
+    function filterTable(searchText) {
+      tableRows.forEach(function (row) {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchText) ? "" : "none";
+      });
+    }
+
+    function showSearchResults(searchText) {
+      searchResults.innerHTML = "";
+
+      if (searchText === "") {
+        searchResults.classList.remove("show");
+        return;
+      }
+
+      const filteredData = searchData.filter(function (item) {
+        return item.title.toLowerCase().includes(searchText) ||
+               item.subtitle.toLowerCase().includes(searchText) ||
+               item.category.toLowerCase().includes(searchText);
+      });
+
+      if (filteredData.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        searchResults.classList.add("show");
+        return;
+      }
+
+      filteredData.forEach(function (item) {
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("search-item");
+
+        resultItem.innerHTML = `
+          <div class="search-item-icon">${item.icon}</div>
+          <div>
+            <div class="search-item-title">${item.title}</div>
+            <div class="search-item-sub">${item.subtitle}</div>
+          </div>
+          <div class="search-item-category">${item.category}</div>
+        `;
+
+        resultItem.addEventListener("click", function () {
+          window.location.href = item.link;
+        });
+
+        searchResults.appendChild(resultItem);
+      });
+
+      searchResults.classList.add("show");
+    }
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".search-container")) {
+        searchResults.classList.remove("show");
+      }
+    });
+  </script>
+
+  <script>
+function getSavedStudentProgress() {
+  const defaultProgress = {
+    progressVersion: "module-progress-v1",
+    overallProgress: 0,
+    completedExercises: 0,
+    totalExercises: 8,
+    averageScore: 0,
+
+    moduleProgress: {
+      module1: 0,
+      module2: 0,
+      module3: 0,
+      module4: 0,
+      module5: 0,
+      module6: 0,
+      module7: 0,
+      module8: 0
+    },
+
+    quizProgress: {
+  completedQuiz: 0,
+  totalQuiz: 5,
+  currentQuizProgress: 0,
+  averageQuizScore: 0,
+  totalQuizPoints: 0,
+  quizAttempts: 0
+},
+
+arcadeProgress: {
+  masterCatcher: null,
+  tagTower: null,
+  match3Html: null
+}
+  };
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (!savedData || typeof savedData !== "object") {
+      return defaultProgress;
+    }
+
+    return {
+      ...defaultProgress,
+      ...savedData,
+
+      moduleProgress: {
+        ...defaultProgress.moduleProgress,
+        ...(savedData.moduleProgress || {})
+      },
+
+      quizProgress: {
+  ...defaultProgress.quizProgress,
+  ...(savedData.quizProgress || {})
+},
+
+arcadeProgress: {
+  ...defaultProgress.arcadeProgress,
+  ...(savedData.arcadeProgress || {})
+}
+    };
+  } catch (error) {
+    return defaultProgress;
+  }
+}
+
+function updateProgressDashboard() {
+  const progress = getSavedStudentProgress();
+
+const overallModuleValues = [
+  Number(progress.moduleProgress.module1) || 0,
+  Number(progress.moduleProgress.module2) || 0,
+  Number(progress.moduleProgress.module3) || 0,
+  Number(progress.moduleProgress.module4) || 0,
+  Number(progress.moduleProgress.module5) || 0,
+  Number(progress.moduleProgress.module6) || 0,
+  Number(progress.moduleProgress.module7) || 0,
+  Number(progress.moduleProgress.module8) || 0
+];
+
+const totalModuleProgress = overallModuleValues.reduce(
+  function(total, value) {
+    return total + value;
+  },
+  0
+);
+
+const completedExercisePoints =
+  (Number(progress.completedExercises) || 0) * 100;
+
+/*
+  8 module scores + 8 exercise scores
+  = 16 equal progress items
+*/
+const overallProgress = Math.round(
+  (totalModuleProgress + completedExercisePoints) / 16
+);
+
+const overallCircle = document.querySelector(".circle");
+const overallText = document.querySelector(".circle span");
+
+overallText.textContent = overallProgress + "%";
+
+overallCircle.style.background =
+  `conic-gradient(#6fd154 ${overallProgress}%, #e6e6e6 0)`;
+
+  const completedExerciseText =
+    document.querySelector(".small-card:nth-child(2) .big-number");
+
+  const completedExerciseBar =
+    document.querySelector(".small-card:nth-child(2) .progress-fill");
+
+  const completedExercisePercent =
+    document.querySelector(".small-card:nth-child(2) .muted-text");
+
+  const exercisePercent = Math.round(
+    (progress.completedExercises / progress.totalExercises) * 100
+  );
+
+  completedExerciseText.textContent =
+    progress.completedExercises + " / " + progress.totalExercises;
+
+  completedExerciseBar.style.width = exercisePercent + "%";
+  completedExercisePercent.textContent =
+    exercisePercent + "% completed";
+
+  const scoreList = [];
+
+/* HTML Basics Quiz points */
+if (Number(progress.quizProgress.quizAttempts) > 0) {
+  scoreList.push(
+    Number(progress.quizProgress.totalQuizPoints) || 0
+  );
+}
+
+/* Latest arcade scores */
+if (
+  progress.arcadeProgress.masterCatcher !== null &&
+  progress.arcadeProgress.masterCatcher !== undefined
+) {
+  scoreList.push(progress.arcadeProgress.masterCatcher);
+}
+
+if (
+  progress.arcadeProgress.tagTower !== null &&
+  progress.arcadeProgress.tagTower !== undefined
+) {
+  scoreList.push(progress.arcadeProgress.tagTower);
+}
+
+if (
+  progress.arcadeProgress.match3Html !== null &&
+  progress.arcadeProgress.match3Html !== undefined
+) {
+  scoreList.push(progress.arcadeProgress.match3Html);
+}
+
+const averageScore = scoreList.length > 0
+  ? Math.round(
+      scoreList.reduce(function(total, score) {
+        return total + score;
+      }, 0) / scoreList.length
+    )
+  : 0;
+
+const averageScoreText = document.querySelector(
+  ".small-card:nth-child(3) .big-number"
+);
+
+averageScoreText.textContent = averageScore;
+
+  const moduleRows =
+    document.querySelectorAll(".module-progress .progress-row");
+
+  const moduleValues = [
+    progress.moduleProgress.module1,
+    progress.moduleProgress.module2,
+    progress.moduleProgress.module3,
+    progress.moduleProgress.module4,
+    progress.moduleProgress.module5,
+    progress.moduleProgress.module6,
+    progress.moduleProgress.module7,
+    progress.moduleProgress.module8
+  ];
+
+  moduleRows.forEach(function(row, index) {
+    const bar = row.querySelector(".progress-fill");
+    const percentText = row.querySelector(".percent");
+
+    bar.style.width = moduleValues[index] + "%";
+    percentText.textContent = moduleValues[index] + "%";
+  });
+
+  document.getElementById("quizQuestionsText").textContent =
+    progress.quizProgress.completedQuiz +
+    " / " +
+    progress.quizProgress.totalQuiz;
+
+  document.getElementById("quizProgressFill").style.width =
+    progress.quizProgress.currentQuizProgress + "%";
+
+  document.getElementById("quizAverageScore").textContent =
+    progress.quizProgress.averageQuizScore + "%";
+
+  document.getElementById("totalQuizPoints").textContent =
+    progress.quizProgress.totalQuizPoints + " points";
+
+  function displayArcadeScore(elementId, score) {
+  const scoreElement = document.getElementById(elementId);
+
+  if (score === null || score === undefined) {
+    scoreElement.textContent = "Not played";
+    scoreElement.className = "score-blue";
+  } else {
+    scoreElement.textContent = "Latest: " + score + " points";
+    scoreElement.className = "score-green";
+  }
+}
+
+displayArcadeScore(
+  "masterCatcherScore",
+  progress.arcadeProgress.masterCatcher
+);
+
+displayArcadeScore(
+  "tagTowerScore",
+  progress.arcadeProgress.tagTower
+);
+
+displayArcadeScore(
+  "match3HtmlScore",
+  progress.arcadeProgress.match3Html
+);
+}
+
+updateProgressDashboard();
+
+window.addEventListener("storage", updateProgressDashboard);
+
+window.addEventListener("focus", updateProgressDashboard);
+
+document.addEventListener("visibilitychange", function() {
+  if (!document.hidden) {
+    updateProgressDashboard();
+  }
+});
+
+setInterval(updateProgressDashboard, 1000);
+</script>
+
+</body>
+</html>

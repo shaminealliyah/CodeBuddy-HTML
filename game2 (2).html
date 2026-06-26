@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tag Tower Game</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#dbe6ff;
+      overflow:hidden;
+    }
+
+    /* TOP BAR */
+
+    .top-bar{
+      width:100%;
+      background:white;
+      padding:18px 40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:3px solid #d3d3d3;
+    }
+
+    .title{
+      font-size:32px;
+      font-weight:900;
+      color:#ff4a4a;
+    }
+
+    .score-board{
+      font-size:24px;
+      font-weight:bold;
+    }
+
+    /* GAME AREA */
+
+    .game-area{
+      width:100%;
+      height:90vh;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* TOWER */
+
+    .tower{
+      position:absolute;
+      bottom:30px;
+      left:50%;
+      transform:translateX(-50%);
+      width:240px;
+
+      display:flex;
+      flex-direction:column-reverse;
+      align-items:center;
+    }
+
+    /* STACKED BLOCK */
+
+    .block{
+      width:220px;
+      height:55px;
+
+      background:#ff4a4a;
+      border:4px solid #c72d2d;
+      border-radius:12px;
+
+      margin-top:5px;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      font-size:24px;
+      font-weight:bold;
+      color:white;
+    }
+
+    /* MOVING BLOCK */
+
+    .moving-block{
+      width:220px;
+      height:55px;
+
+      background:white;
+      border:4px solid black;
+      border-radius:12px;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      font-size:24px;
+      font-weight:bold;
+
+      position:absolute;
+      top:100px;
+      left:0;
+    }
+
+    /* BUTTON */
+
+    .drop-btn{
+      position:absolute;
+      right:40px;
+      bottom:40px;
+
+      padding:18px 35px;
+
+      background:#ff4a4a;
+      color:white;
+
+      border:none;
+      border-radius:15px;
+
+      font-size:22px;
+      font-weight:bold;
+
+      cursor:pointer;
+    }
+
+    .drop-btn:hover{
+      background:#ff2d2d;
+    }
+
+    /* INSTRUCTION */
+
+    .instructions{
+      position:absolute;
+      top:20px;
+      left:20px;
+
+      background:white;
+      padding:15px;
+      border-radius:15px;
+
+      font-weight:bold;
+    }
+
+    /* GAME OVER */
+
+    .game-over{
+      position:absolute;
+      top:50%;
+      left:50%;
+
+      transform:translate(-50%,-50%);
+
+      background:white;
+      padding:40px;
+      border-radius:20px;
+
+      text-align:center;
+
+      display:none;
+
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .game-over h1{
+      font-size:50px;
+      margin-bottom:20px;
+      color:#ff4a4a;
+    }
+
+    .game-over button{
+      padding:15px 30px;
+
+      border:none;
+      background:#ff4a4a;
+
+      color:white;
+
+      font-size:20px;
+      border-radius:10px;
+
+      cursor:pointer;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="title">
+      TAG TOWER
+    </div>
+
+    <div class="score-board">
+      Tower Height:
+      <span id="score">0</span>
+    </div>
+
+  </div>
+
+  <!-- GAME AREA -->
+
+  <div class="game-area">
+
+    <div class="instructions">
+      Press DROP when the block is centered!
+    </div>
+
+    <!-- MOVING BLOCK -->
+
+    <div class="moving-block" id="movingBlock">
+      &lt;div&gt;
+    </div>
+
+    <!-- TOWER -->
+
+    <div class="tower" id="tower"></div>
+
+    <!-- BUTTON -->
+
+    <button class="drop-btn" onclick="dropBlock()">
+      DROP
+    </button>
+
+    <!-- GAME OVER -->
+
+    <div class="game-over" id="gameOver">
+
+      <h1>GAME OVER</h1>
+
+      <p style="font-size:25px; margin-bottom:20px;">
+        Final Tower:
+        <span id="finalScore"></span>
+      </p>
+
+      <button onclick="restartGame()">
+        PLAY AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    let movingBlock =
+    document.getElementById("movingBlock");
+
+    let tower =
+    document.getElementById("tower");
+
+    let scoreText =
+    document.getElementById("score");
+
+    let score = 0;
+
+    let position = 0;
+
+    let direction = 1;
+
+    let speed = 5;
+
+    let gameRunning = true;
+
+    // HTML TAGS
+
+    let tags = [
+
+      "&lt;div&gt;",
+      "&lt;h1&gt;",
+      "&lt;p&gt;",
+      "&lt;img&gt;",
+      "&lt;table&gt;",
+      "&lt;ul&gt;",
+      "&lt;li&gt;",
+      "&lt;a&gt;"
+
+    ];
+
+    // MOVE BLOCK LEFT RIGHT
+
+    function moveBlock(){
+
+      if(!gameRunning) return;
+
+      position += speed * direction;
+
+      movingBlock.style.left = position + "px";
+
+      // WALL BOUNCE
+
+      if(position > window.innerWidth - 250){
+
+        direction = -1;
+
+      }
+
+      if(position < 0){
+
+        direction = 1;
+
+      }
+
+      requestAnimationFrame(moveBlock);
+
+    }
+
+    // DROP BLOCK
+
+    function dropBlock(){
+
+      if(!gameRunning) return;
+
+      // CENTER AREA
+
+      let center =
+      window.innerWidth / 2 - 110;
+
+      // FAIL
+
+      if(position < center - 120 ||
+         position > center + 120){
+
+        endGame();
+        return;
+      }
+
+      // CREATE BLOCK
+
+      let newBlock =
+      document.createElement("div");
+
+      newBlock.classList.add("block");
+
+      let randomTag =
+      tags[Math.floor(Math.random() * tags.length)];
+
+      newBlock.innerHTML = randomTag;
+
+      tower.appendChild(newBlock);
+
+      // SCORE
+
+      score++;
+
+      scoreText.innerHTML = score;
+
+      // RESET
+
+      position = 0;
+
+      speed += 0.4;
+
+      movingBlock.innerHTML =
+      tags[Math.floor(Math.random() * tags.length)];
+
+    }
+
+function saveTagTowerScore() {
+  let progress = {};
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (savedData && typeof savedData === "object") {
+      progress = savedData;
+    }
+  } catch (error) {
+    progress = {};
+  }
+
+  progress.arcadeProgress = {
+    ...(progress.arcadeProgress || {}),
+    tagTower: score
+  };
+
+  localStorage.setItem(
+    "studentProgress",
+    JSON.stringify(progress)
+  );
+}    
+
+// GAME OVER
+
+    function endGame(){
+
+      gameRunning = false;
+
+      document.getElementById("gameOver").style.display =
+      "block";
+
+      document.getElementById("finalScore").innerHTML =
+      score;
+
+      saveTagTowerScore();
+
+    }
+
+    // RESTART
+
+    function restartGame(){
+
+      location.reload();
+
+    }
+
+    // START
+
+    moveBlock();
+
+  </script>
+
+</body>
+</html>

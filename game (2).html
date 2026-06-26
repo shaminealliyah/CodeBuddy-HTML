@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HTML Learning Hub</title>
+
+  <!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+
+    html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+}
+
+    .container {
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    width:100%;
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#ff66b3;
+}
+
+/* MENU */
+
+.menu{
+    display:flex;
+    gap:45px;
+    align-items:center;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#222;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ff66b3;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-btn{
+    cursor:pointer;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    transition:0.3s;
+}
+
+.dropdown-btn:hover{
+    color:#ff66b3;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown-content{
+    position:absolute;
+    top:40px;
+    left:0;
+    width:220px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+
+    z-index:9999;
+}
+
+.dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:15px 20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.dropdown-content a:hover{
+    background:#f8d9f0;
+    color:#ff66b3;
+    padding-left:28px;
+}
+
+/* ================= SEARCH ================= */
+
+/* ================= SEARCH RESULTS STYLES ================= */
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 350px;
+    max-height: 450px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-item:hover {
+    background: #f8d9f0;
+}
+
+.search-item-icon {
+    font-size: 22px;
+}
+
+.search-item-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-item-sub {
+    font-size: 11px;
+    color: #888;
+}
+
+.search-item-category {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #ff66b3;
+    color: white;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+    .search-results {
+        width: 300px;
+        right: -20px;
+    }
+    
+    .search-item-title {
+        font-size: 12px;
+    }
+}
+
+.search-box{
+    background:white;
+    border:2px solid black;
+    border-radius:40px;
+    padding:10px 20px;
+    width:230px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:16px;
+}
+
+.search-icon{
+    font-size:20px;
+}
+
+    /* MAIN SECTION */
+    .main{
+      background:#dbe6ff;
+      padding:40px;
+      min-height:500px;
+    }
+
+    .top-section{
+      display:flex;
+      align-items:center;
+      gap:25px;
+      margin-bottom:50px;
+    }
+
+    .gameboy{
+      width:95px;
+      height:125px;
+      background:#d9d1c7;
+      border-radius:8px;
+      position:relative;
+      border:3px solid #b8aea4;
+    }
+
+    .screen{
+      width:58px;
+      height:58px;
+      background:linear-gradient(to bottom,#7db4ff,#d9f2ff);
+      margin:12px auto;
+      border:4px solid #2f2f2f;
+    }
+
+    .plus{
+      position:absolute;
+      bottom:22px;
+      left:15px;
+      font-size:35px;
+      font-weight:bold;
+    }
+
+    .rank-text{
+      font-size:34px;
+      font-weight:900;
+      letter-spacing:2px;
+      color:#1f1f1f;
+    }
+    
+    .rank-badge {
+      color: #ff4a4a;
+      transition: color 0.3s ease;
+    }
+
+    /* HUB LAYOUT: GAMES & QUIZ SIDE-BY-SIDE */
+    .hub-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 20px;
+      color: #1f1f1f;
+      text-transform: uppercase;
+    }
+
+    /* BUTTONS */
+    .game-grid{
+      display:flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-btn{
+      background:#ff4a4a;
+      border:none;
+      border-radius:15px;
+      padding:20px 15px;
+      font-size:22px;
+      font-weight:900;
+      color:white;
+      cursor:pointer;
+      box-shadow:0 5px 0 #c72d2d;
+      text-align: center;
+      text-decoration: none;
+      transition:0.1s;
+    }
+
+    .game-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 7px 0 #c72d2d;
+    }
+    
+    .game-btn:active{
+      transform:translateY(3px);
+      box-shadow: 0 2px 0 #c72d2d;
+    }
+
+    /* QUIZ CARD SECTION */
+    .quiz-card {
+      background: white;
+      border: 3px solid black;
+      border-radius: 20px;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .quiz-intro-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .start-quiz-btn {
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 5px 0 #388e3c;
+    }
+
+    .start-quiz-btn:hover { transform: translateY(-2px); }
+
+    /* QUIZ MODAL BOX */
+    .modal-overlay {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    .quiz-box {
+      background: white;
+      width: 550px;
+      padding: 30px;
+      border-radius: 20px;
+      border: 4px solid black;
+      position: relative;
+    }
+
+    .quiz-box h3 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .options-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .option-btn {
+      background: #f0f4ff;
+      border: 2px solid #b4c6ff;
+      padding: 12px 15px;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: left;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .option-btn:hover {
+      background: #dbe6ff;
+    }
+
+    .close-quiz {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 24px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .score-summary {
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    @media(max-width:900px){
+      .container{ width:100%; }
+      .hub-content { grid-template-columns: 1fr; }
+      .rank-text{ font-size:22px; }
+    }
+  </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+    <div class="logo">CodeBuddy HTML</div>
+
+    <div class="menu">
+      <a href="MAINPAGE.html">Introduction</a>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Module ▼</div>
+        <div class="dropdown-content">
+          <a href="index.html">Module 1</a>
+          <a href="page2.html">Module 2</a>
+          <a href="page3.html">Module 3</a>
+          <a href="page4.html">Module 4</a>
+          <a href="page5.html">Module 5</a>
+          <a href="page6.html">Module 6</a>
+          <a href="page7.html">Module 7</a>
+          <a href="page8.html">Module 8</a>
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Exercise ▼</div>
+        <div class="dropdown-content">
+          	<a href="Exercise1.html">Exercise 1</a>
+                <a href="Exercise 2.html">Exercise 2</a>
+		<a href="Exercise3.html">Exercise 3</a>
+		<a href="Exercise4.html">Exercise 4</a>
+		<a href="Exercise5.html">Exercise 5</a>
+		<a href="Exercise6.html">Exercise 6</a>
+		<a href="Exercise7.html">Exercise 7</a>
+		<a href="Exercise8.html">Exercise 8</a>
+            
+        </div>
+      </div>
+
+      <div class="dropdown">
+        <div class="dropdown-btn">Progress ▼</div>
+        <div class="dropdown-content">
+          <a href="progress1.html">Progress 1</a>
+          <a href="progress2.html">Progress 2</a>
+          <a href="progress3.html">Progress 3</a>
+          <a href="progress4.html">Progress 4</a>
+          <a href="progress5.html">Progress 5</a>
+          <a href="progress6.html">Progress 6</a>
+          <a href="progress7.html">Progress 7</a>
+          <a href="progress8.html">Progress 8</a>
+        </div>
+      </div>
+
+      <a href="game (2).html">Game</a>
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search">
+        <span class="search-icon">🔍</span>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+  </div>
+
+
+    <div class="main">
+
+      <div class="top-section">
+        <div class="gameboy">
+          <div class="screen"></div>
+          <div class="plus">+</div>
+        </div>
+        <div class="rank-text">
+          YOUR CURRENT RANK : <span id="currentRank" class="rank-badge">BRONZE</span>
+        </div>
+      </div>
+
+      <div class="hub-content">
+        
+        <div>
+          <div class="section-title">Select Arcade Game</div>
+          <div class="game-grid">
+            <a href="game1 (3).html" class="game-btn">1. MASTER CATCHER</a>
+            <a href="game2 (2).html" class="game-btn">2. TAG TOWER</a>
+            <a href="game3 (2).html" class="game-btn">3. MATCH-3 HTML</a>
+          </div>
+        </div>
+
+        <div>
+          <div class="section-title">Knowledge Check</div>
+          <div class="quiz-card">
+            <div>
+              <h2 style="margin-bottom: 10px;">HTML Basics Quiz</h2>
+              <p class="quiz-intro-text">
+                Test your basic structure skills! Pull a random pool of 5 questions each time you play. Elevate your quiz points to upgrade your rank!
+              </p>
+              <p style="font-weight: bold; color: #333; margin-bottom: 15px;">
+                Total Quiz Points : <span id="totalPointsDisplay">0</span>
+              </p>
+            </div>
+            <button class="start-quiz-btn" onclick="openQuiz()">START QUIZ</button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" id="quizModal">
+    <div class="quiz-box">
+      <div class="close-quiz" onclick="closeQuiz()">&times;</div>
+      <div id="quiz-gameplay">
+        <p id="progress-text" style="font-weight: bold; color: #555; margin-bottom: 5px;">Question 1 of 5</p>
+        <h3 id="question-text">Loading Question...</h3>
+        <div class="options-container" id="options-box">
+          </div>
+      </div>
+      
+      <div id="quiz-results" style="display: none;" class="score-summary">
+        <h2 style="color: #4caf50; font-size: 32px; margin-bottom: 10px;">Quiz Complete!</h2>
+        <p style="font-size: 20px; margin-bottom: 10px;">You Scored: <span id="quiz-score-val" style="font-weight: bold;">0</span> / 5</p>
+        <p style="font-size: 16px; color: #666; margin-bottom: 20px;" id="points-earned-msg"></p>
+        <button class="start-quiz-btn" style="background: #ff4a4a; box-shadow: 0 5px 0 #c72d2d;" onclick="resetQuiz()">Play Another Set</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Expanded Database of HTML Questions
+    const masterQuestionBank = [
+      { question: "What does HTML stand for?", options: ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Management Language", "Hyper Tech Making Layouts"], correct: "Hyper Text Markup Language" },
+      { question: "Which HTML tag is used to define the largest heading?", options: ["&lt;heading&gt;", "&lt;h6&gt;", "&lt;head&gt;", "&lt;h1&gt;"], correct: "&lt;h1&gt;" },
+      { question: "What is the correct HTML element for inserting a line break?", options: ["&lt;break&gt;", "&lt;lb&gt;", "&lt;br&gt;", "&lt;hr&gt;"], correct: "&lt;br&gt;" },
+      { question: "Which attribute is used to provide an image source path?", options: ["href", "src", "alt", "link"], correct: "src" },
+      { question: "Which tag is used to create an unordered bulleted list?", options: ["&lt;ol&gt;", "&lt;list&gt;", "&lt;li&gt;", "&lt;ul&gt;"], correct: "&lt;ul&gt;" },
+      { question: "What is the correct HTML for creating a hyperlink?", options: ["&lt;a href='url'&gt;Link&lt;/a&gt;", "&lt;a url='url'&gt;Link&lt;/a&gt;", "&lt;link href='url'&gt;Link&lt;/link&gt;", "&lt;href='url'&gt;Link&lt;/href&gt;"], correct: "&lt;a href='url'&gt;Link&lt;/a&gt;" },
+      { question: "Which character is used to indicate an end tag?", options: ["^", "*", "<", "/"], correct: "/" },
+      { question: "How can you open a link in a new tab/browser window?", options: ["target='_new'", "target='_blank'", "new='true'", "window='new'"], correct: "target='_blank'" },
+      { question: "Which element is used to define the title of a webpage document?", options: ["&lt;head&gt;", "&lt;meta&gt;", "&lt;title&gt;", "&lt;header&gt;"], correct: "&lt;title&gt;" },
+      { question: "Which HTML element is used to store metadata about the document?", options: ["&lt;body&gt;", "&lt;head&gt;", "&lt;html&gt;", "&lt;footer&gt;"], correct: "&lt;head&gt;" },
+      { question: "What is the correct HTML element for structural list items?", options: ["&lt;list&gt;", "&lt;ul&gt;", "&lt;li&gt;", "&lt;ol&gt;"], correct: "&lt;li&gt;" },
+      { question: "Which attribute is used to display alternative text if an image fails to load?", options: ["title", "alt", "src", "longdesc"], correct: "alt" }
+    ];
+
+const PROGRESS_VERSION = "module-progress-v1";
+
+let totalPoints = 0;
+let activeQuizPool = [];
+let currentQuestionIndex = 0;
+let currentQuizScore = 0;
+
+function createProgressData() {
+  return {
+    progressVersion: PROGRESS_VERSION,
+    overallProgress: 0,
+    completedExercises: 0,
+    totalExercises: 8,
+    averageScore: 0,
+
+    moduleProgress: {
+      module1: 0,
+      module2: 0,
+      module3: 0,
+      module4: 0,
+      module5: 0,
+      module6: 0,
+      module7: 0,
+      module8: 0
+    },
+
+    quizProgress: {
+      completedQuiz: 0,
+      totalQuiz: 5,
+      currentQuizProgress: 0,
+      averageQuizScore: 0,
+      totalQuizPoints: 0,
+      quizAttempts: 0
+    }
+  };
+}
+
+function getStudentProgress() {
+  const freshProgress = createProgressData();
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (!savedData || typeof savedData !== "object") {
+      return freshProgress;
+    }
+
+    return {
+      ...freshProgress,
+      ...savedData,
+      progressVersion: PROGRESS_VERSION,
+
+      moduleProgress: {
+        ...freshProgress.moduleProgress,
+        ...(savedData.moduleProgress || {})
+      },
+
+      quizProgress: {
+        ...freshProgress.quizProgress,
+        ...(savedData.quizProgress || {})
+      }
+    };
+  } catch (error) {
+    return freshProgress;
+  }
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const randomIndex = Math.floor(Math.random() * (i + 1));
+
+    [arr[i], arr[randomIndex]] = [
+      arr[randomIndex],
+      arr[i]
+    ];
+  }
+
+  return arr;
+}
+
+function checkAndUpdateRank() {
+  let rank = "BRONZE";
+  let rankColor = "#cd7f32";
+
+  if (totalPoints >= 35) {
+    rank = "DIAMOND";
+    rankColor = "#30d5c8";
+  } else if (totalPoints >= 20) {
+    rank = "GOLD";
+    rankColor = "#ffd700";
+  } else if (totalPoints >= 10) {
+    rank = "SILVER";
+    rankColor = "#c0c0c0";
+  }
+
+  document.getElementById("currentRank").innerText = rank;
+  document.getElementById("currentRank").style.color = rankColor;
+
+  document.getElementById("totalPointsDisplay").innerText =
+    totalPoints;
+}
+
+function loadStoredQuizData() {
+  const progress = getStudentProgress();
+
+  totalPoints = Number(
+    progress.quizProgress.totalQuizPoints
+  ) || 0;
+
+  checkAndUpdateRank();
+}
+
+function saveQuizResult() {
+  const progress = getStudentProgress();
+
+  const oldPoints = Number(
+    progress.quizProgress.totalQuizPoints
+  ) || 0;
+
+  const oldAttempts = Number(
+    progress.quizProgress.quizAttempts
+  ) || 0;
+
+  totalPoints = oldPoints + currentQuizScore;
+
+  const newAttempts = oldAttempts + 1;
+
+  const averageQuizScore = Math.round(
+    (totalPoints / (newAttempts * 5)) * 100
+  );
+
+  progress.quizProgress = {
+    ...progress.quizProgress,
+
+    completedQuiz: 5,
+    totalQuiz: 5,
+    currentQuizProgress: 100,
+    averageQuizScore: averageQuizScore,
+    totalQuizPoints: totalPoints,
+    quizAttempts: newAttempts
+  };
+
+  localStorage.setItem(
+    "studentProgress",
+    JSON.stringify(progress)
+  );
+}
+
+function prepareQuizSet() {
+  activeQuizPool = shuffleArray([...masterQuestionBank])
+    .slice(0, 5)
+    .map(function(question) {
+      return {
+        ...question,
+        options: shuffleArray([...question.options])
+      };
+    });
+}
+
+function openQuiz() {
+  document.getElementById("quizModal").style.display = "flex";
+  resetQuiz();
+}
+
+function closeQuiz() {
+  document.getElementById("quizModal").style.display = "none";
+}
+
+function loadQuestion() {
+  if (currentQuestionIndex >= activeQuizPool.length) {
+    showResults();
+    return;
+  }
+
+  document.getElementById("quiz-gameplay").style.display = "block";
+  document.getElementById("quiz-results").style.display = "none";
+
+  document.getElementById("progress-text").innerText =
+    "Question " +
+    (currentQuestionIndex + 1) +
+    " of " +
+    activeQuizPool.length;
+
+  const currentData = activeQuizPool[currentQuestionIndex];
+
+  document.getElementById("question-text").innerHTML =
+    currentData.question;
+
+  const optionsBox = document.getElementById("options-box");
+
+  optionsBox.innerHTML = "";
+
+  currentData.options.forEach(function(option) {
+    const button = document.createElement("button");
+
+    button.classList.add("option-btn");
+    button.innerHTML = option;
+
+    button.onclick = function() {
+      selectAnswer(option);
+    };
+
+    optionsBox.appendChild(button);
+  });
+}
+
+function selectAnswer(chosenOption) {
+  if (
+    chosenOption ===
+    activeQuizPool[currentQuestionIndex].correct
+  ) {
+    currentQuizScore++;
+  }
+
+  currentQuestionIndex++;
+  loadQuestion();
+}
+
+function showResults() {
+  document.getElementById("quiz-gameplay").style.display = "none";
+  document.getElementById("quiz-results").style.display = "block";
+
+  document.getElementById("quiz-score-val").innerText =
+    currentQuizScore;
+
+  saveQuizResult();
+
+  document.getElementById("points-earned-msg").innerText =
+    "+" +
+    currentQuizScore +
+    " points added to your score history!";
+
+  checkAndUpdateRank();
+}
+
+function resetQuiz() {
+  currentQuestionIndex = 0;
+  currentQuizScore = 0;
+
+  prepareQuizSet();
+  loadQuestion();
+}
+
+loadStoredQuizData();
+  </script>
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const tableRows = document.querySelectorAll("tbody tr");
+
+    const searchData = [
+
+{ title: "Introduction", subtitle: "Start learning HTML basics", category: "Introduction", icon: "🏠", link: "MAINPAGE.html" },
+
+      { title: "Module 1", subtitle: "Basic HTML module", category: "Module", icon: "📘", link: "index.html" },
+      { title: "Module 2", subtitle: "User Interface Programming", category: "Module", icon: "📘", link: "page2.html" },
+      { title: "Module 3", subtitle: "Peripherals", category: "Module", icon: "📘", link: "page3.html" },
+      { title: "Module 4", subtitle: "Software Architectures and MVC", category: "Module", icon: "📘", link: "page4.html" },
+      { title: "Module 5", subtitle: "Psychology and Motor Performance", category: "Module", icon: "📘", link: "page5.html" },
+      { title: "Module 6", subtitle: "Cognitive Aspects", category: "Module", icon: "📘", link: "page6.html" },
+      { title: "Module 7", subtitle: "User Centered Design", category: "Module", icon: "📘", link: "page7.html" },
+      { title: "Module 8", subtitle: "Emergent Interfaces", category: "Module", icon: "📘", link: "page8.html" },
+
+{ title: "Exercise 1", subtitle: "Basic HTML structure and tags", category: "Exercise", icon: "✏️", link: "Exercise1.html" },
+{ title: "Exercise 2", subtitle: "GUI and interactive systems", category: "Exercise", icon: "✏️", link: "Exercise 2.html" },
+{ title: "Exercise 3", subtitle: "HTML content and lists", category: "Exercise", icon: "✏️", link: "Exercise3.html" },
+{ title: "Exercise 4", subtitle: "HTML hyperlinks", category: "Exercise", icon: "✏️", link: "Exercise4.html" },
+{ title: "Exercise 5", subtitle: "Correct HTML errors", category: "Exercise", icon: "✏️", link: "Exercise5.html" },
+{ title: "Exercise 6", subtitle: "HTML best practices", category: "Exercise", icon: "✏️", link: "Exercise6.html" },
+{ title: "Exercise 7", subtitle: "Create a healthy lifestyle webpage", category: "Exercise", icon: "✏️", link: "Exercise7.html" },
+{ title: "Exercise 8", subtitle: "Create a personal portfolio website", category: "Exercise", icon: "✏️", link: "Exercise8.html" },
+
+      { title: "Progress 1", subtitle: "Module 1 progress dashboard", category: "Progress", icon: "📊", link: "progress1.html" },
+      { title: "Progress 2", subtitle: "Module 2 progress dashboard", category: "Progress", icon: "📊", link: "progress2.html" },
+      { title: "Progress 3", subtitle: "Module 3 progress dashboard", category: "Progress", icon: "📊", link: "progress3.html" },
+      { title: "Progress 4", subtitle: "Module 4 progress dashboard", category: "Progress", icon: "📊", link: "progress4.html" },
+      { title: "Progress 5", subtitle: "Module 5 progress dashboard", category: "Progress", icon: "📊", link: "progress5.html" },
+      { title: "Progress 6", subtitle: "Module 6 progress dashboard", category: "Progress", icon: "📊", link: "progress6.html" },
+      { title: "Progress 7", subtitle: "Module 7 progress dashboard", category: "Progress", icon: "📊", link: "progress7.html" },
+      { title: "Progress 8", subtitle: "Module 8 progress dashboard", category: "Progress", icon: "📊", link: "progress8.html" },
+
+      { title: "Game", subtitle: "Interactive quiz game", category: "Game", icon: "🎮", link: "game (2).html" }
+    ];
+
+    searchInput.addEventListener("keyup", function () {
+      const searchText = searchInput.value.toLowerCase().trim();
+      filterTable(searchText);
+      showSearchResults(searchText);
+    });
+
+    function filterTable(searchText) {
+      tableRows.forEach(function (row) {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchText) ? "" : "none";
+      });
+    }
+
+    function showSearchResults(searchText) {
+      searchResults.innerHTML = "";
+
+      if (searchText === "") {
+        searchResults.classList.remove("show");
+        return;
+      }
+
+      const filteredData = searchData.filter(function (item) {
+        return item.title.toLowerCase().includes(searchText) ||
+               item.subtitle.toLowerCase().includes(searchText) ||
+               item.category.toLowerCase().includes(searchText);
+      });
+
+      if (filteredData.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        searchResults.classList.add("show");
+        return;
+      }
+
+      filteredData.forEach(function (item) {
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("search-item");
+
+        resultItem.innerHTML = `
+          <div class="search-item-icon">${item.icon}</div>
+          <div>
+            <div class="search-item-title">${item.title}</div>
+            <div class="search-item-sub">${item.subtitle}</div>
+          </div>
+          <div class="search-item-category">${item.category}</div>
+        `;
+
+        resultItem.addEventListener("click", function () {
+          window.location.href = item.link;
+        });
+
+        searchResults.appendChild(resultItem);
+      });
+
+      searchResults.classList.add("show");
+    }
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".search-container")) {
+        searchResults.classList.remove("show");
+      }
+    });
+  </script>
+
+  
+</body>
+</html>

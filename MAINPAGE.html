@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HTML Learning Platform</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#fdf6fc;
+}
+
+.btn {
+  margin-bottom: 20px;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    width:100%;
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#ff66b3;
+}
+
+/* MENU */
+
+.menu{
+    display:flex;
+    gap:45px;
+    align-items:center;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#222;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ff66b3;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-btn{
+    cursor:pointer;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    transition:0.3s;
+}
+
+.dropdown-btn:hover{
+    color:#ff66b3;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown-content{
+    position:absolute;
+    top:40px;
+    left:0;
+    width:220px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+
+    z-index:9999;
+}
+
+.dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:15px 20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.dropdown-content a:hover{
+    background:#f8d9f0;
+    color:#ff66b3;
+    padding-left:28px;
+}
+
+/* ================= SEARCH ================= */
+
+/* ================= SEARCH RESULTS STYLES ================= */
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 350px;
+    max-height: 450px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-item:hover {
+    background: #f8d9f0;
+}
+
+.search-item-icon {
+    font-size: 22px;
+}
+
+.search-item-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-item-sub {
+    font-size: 11px;
+    color: #888;
+}
+
+.search-item-category {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #ff66b3;
+    color: white;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+    .search-results {
+        width: 300px;
+        right: -20px;
+    }
+    
+    .search-item-title {
+        font-size: 12px;
+    }
+}
+
+.search-box{
+    background:white;
+    border:2px solid black;
+    border-radius:40px;
+    padding:10px 20px;
+    width:230px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:16px;
+}
+
+.search-icon{
+    font-size:20px;
+}
+
+
+/* ================= HERO SECTION ================= */
+
+.hero{
+    background:linear-gradient(
+        135deg,
+        #f7d7f4,
+        #efd1ff
+    );
+
+    padding:80px 8%;
+}
+
+.hero-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:50px;
+}
+
+.left{
+    flex:1;
+}
+
+.badge{
+    display:inline-block;
+    background:white;
+    color:#ff73b5;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:30px;
+    margin-bottom:20px;
+}
+
+.left h1{
+    font-size:70px;
+    color:#111;
+    margin-bottom:20px;
+}
+
+.left p{
+    font-size:22px;
+    line-height:1.8;
+    color:#444;
+    margin-bottom:30px;
+}
+
+.learners{
+    margin-top:20px;
+    font-size:20px;
+    font-weight:600;
+    color:#444;
+}
+
+.learners span{
+    color:#ff73b5;
+}
+
+.right{
+    flex:1;
+}
+
+.course-card{
+    background:#fff8f6;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:10px 10px 0px #ffd4ef;
+}
+
+.course-card h2{
+    margin-bottom:25px;
+    color:#111;
+}
+
+.feature{
+    padding:20px 0;
+    border-bottom:1px solid #ddd;
+    font-size:18px;
+}
+
+.feature:last-child{
+    border:none;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+    padding:90px 8%;
+    background:white;
+}
+
+.about-container{
+    display:flex;
+    gap:80px;
+}
+
+.about-left{
+    flex:2;
+}
+
+.about-right{
+    flex:1;
+}
+
+.about h2{
+    margin-bottom:25px;
+    font-size:40px;
+}
+
+.about p{
+    line-height:2;
+    font-size:20px;
+    color:#444;
+}
+
+.skills{
+    margin-top:20px;
+}
+
+.skills li{
+    list-style:none;
+    margin-bottom:20px;
+    font-size:20px;
+    font-weight:500;
+}
+
+/* ================= W3SCHOOLS STYLE SECTION ================= */
+
+.explore{
+    padding:80px 8%;
+    text-align:center;
+    background:#fdf6fc;
+}
+
+.explore h2{
+    font-size:50px;
+    margin-bottom:15px;
+}
+
+.explore p{
+    font-size:20px;
+    color:#555;
+    margin-bottom:50px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.07);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+}
+
+.card h3{
+    margin-bottom:15px;
+    color:#ff73b5;
+}
+
+.card p{
+    color:#666;
+}
+
+/* ================= BUTTON ================= */
+
+.btn{
+    display:inline-block;
+    margin-top:30px;
+    background:linear-gradient(
+        90deg,
+        #ff8cc7,
+        #f7a3ff
+    );
+    color:white;
+    padding:15px 40px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:600;
+    font-size:18px;
+}
+
+.btn:hover{
+    opacity:0.9;
+}
+
+@media(max-width:1000px){
+
+.hero-container,
+.about-container{
+    flex-direction:column;
+}
+
+.left h1{
+    font-size:50px;
+}
+
+.nav-links{
+    display:none;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+
+<nav class="navbar">
+
+    <div class="logo">CodeBuddy HTML</div>
+
+<div class="menu">
+
+        <a href="MAINPAGE.html">Introduction</a>
+
+        <div class="dropdown">
+        <div class="dropdown-btn">Module ▼</div>
+        <div class="dropdown-content">
+          <a href="index.html">Module 1</a>
+          <a href="page2.html">Module 2</a>
+          <a href="page3.html">Module 3</a>
+          <a href="page4.html">Module 4</a>
+          <a href="page5.html">Module 5</a>
+          <a href="page6.html">Module 6</a>
+          <a href="page7.html">Module 7</a>
+          <a href="page8.html">Module 8</a>
+        </div>
+      </div>
+
+<div class="dropdown">
+  <div class="dropdown-btn">Exercise ▼</div>
+        <div class="dropdown-content">
+    		<a href="Exercise1.html">Exercise 1</a>
+                <a href="Exercise 2.html">Exercise 2</a>
+		<a href="Exercise3.html">Exercise 3</a>
+		<a href="Exercise4.html">Exercise 4</a>
+		<a href="Exercise5.html">Exercise 5</a>
+		<a href="Exercise6.html">Exercise 6</a>
+		<a href="Exercise7.html">Exercise 7</a>
+		<a href="Exercise8.html">Exercise 8</a>
+            
+  </div>
+</div>
+
+        <div class="dropdown">
+        <div class="dropdown-btn">Progress ▼</div>
+        <div class="dropdown-content">
+          <a href="progress1.html">Progress 1</a>
+          <a href="progress2.html">Progress 2</a>
+          <a href="progress3.html">Progress 3</a>
+          <a href="progress4.html">Progress 4</a>
+          <a href="progress5.html">Progress 5</a>
+          <a href="progress6.html">Progress 6</a>
+          <a href="progress7.html">Progress 7</a>
+          <a href="progress8.html">Progress 8</a>
+        </div>
+      </div>
+
+        <a href="game (2).html">Game</a>
+    </div>
+
+    <div class="search-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search">
+      <span class="search-icon">🔍</span>
+    </div>
+   <div id="searchResults" class="search-results"></div>
+  </div>
+
+</div>
+</nav>
+
+<a href="index.html" class="btn">Begin Learning</a>
+
+<!-- HERO -->
+
+<section class="hero">
+
+<div class="hero-container">
+
+<div class="left">
+
+<span class="badge">Free Course</span>
+
+<h1>Learn HTML</h1>
+
+<p>
+Start at the beginning by learning HTML basics —
+an important foundation for building and editing web pages.
+</p>
+
+<div class="learners">
+
+</div>
+
+</div>
+
+<div class="right">
+
+<div class="course-card">
+
+<h2>This course includes</h2>
+
+<div class="feature">✨ Beginner friendly module</div>
+
+<div class="feature">🧩 Projects to apply new skills</div>
+
+<div class="feature">📝 Quizzes to test your knowledge</div>
+
+<div class="feature">🏆 Fun HTML Games </div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- ABOUT -->
+
+<section class="about">
+
+<div class="about-container">
+
+<div class="about-left">
+
+<h2>About this course</h2>
+
+<p>
+Fun fact: all websites use HTML — even this one.
+It's a fundamental part of every web developer's toolkit.
+
+HTML provides the content that gives web pages structure.
+By using elements and tags, you can add text, images,
+videos, forms and much more.
+
+Learning HTML is the first step in your web development
+journey and an essential skill for both front-end and
+back-end developers.
+</p>
+
+</div>
+
+<div class="about-right">
+
+<h2>Skills you'll gain</h2>
+
+<ul class="skills">
+<li>✔ Structure pages with HTML</li>
+<li>✔ Create forms and user input</li>
+<li>✔ Write cleaner HTML</li>
+</ul>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- W3SCHOOLS STYLE -->
+
+<section class="explore">
+
+<h2>Why Learn HTML?</h2>
+
+<p>
+Build beautiful websites from scratch and start your
+web development journey today.
+</p>
+
+<div class="cards">
+
+<div class="card">
+<h3>Interactive Lessons</h3>
+<p>
+Learn step-by-step with beginner friendly modules.
+</p>
+</div>
+
+<div class="card">
+<h3>Practice Exercises</h3>
+<p>
+Strengthen your understanding through challenges.
+</p>
+</div>
+
+<div class="card">
+<h3>Real Projects</h3>
+<p>
+Apply your skills with hands-on HTML projects.
+</p>
+</div>
+
+</div>
+
+</section>
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const tableRows = document.querySelectorAll("tbody tr");
+
+    const searchData = [
+
+{ title: "Introduction", subtitle: "Start learning HTML basics", category: "Introduction", icon: "🏠", link: "MAINPAGE.html" },
+
+      { title: "Module 1", subtitle: "Basic HTML module", category: "Module", icon: "📘", link: "index.html" },
+      { title: "Module 2", subtitle: "User Interface Programming", category: "Module", icon: "📘", link: "page2.html" },
+      { title: "Module 3", subtitle: "Peripherals", category: "Module", icon: "📘", link: "page3.html" },
+      { title: "Module 4", subtitle: "Software Architectures and MVC", category: "Module", icon: "📘", link: "page4.html" },
+      { title: "Module 5", subtitle: "Psychology and Motor Performance", category: "Module", icon: "📘", link: "page5.html" },
+      { title: "Module 6", subtitle: "Cognitive Aspects", category: "Module", icon: "📘", link: "page6.html" },
+      { title: "Module 7", subtitle: "User Centered Design", category: "Module", icon: "📘", link: "page7.html" },
+      { title: "Module 8", subtitle: "Emergent Interfaces", category: "Module", icon: "📘", link: "page8.html" },
+
+{ title: "Exercise 1", subtitle: "Basic HTML structure and tags", category: "Exercise", icon: "✏️", link: "Exercise1.html" },
+{ title: "Exercise 2", subtitle: "GUI and interactive systems", category: "Exercise", icon: "✏️", link: "Exercise 2.html" },
+{ title: "Exercise 3", subtitle: "HTML content and lists", category: "Exercise", icon: "✏️", link: "Exercise3.html" },
+{ title: "Exercise 4", subtitle: "HTML hyperlinks", category: "Exercise", icon: "✏️", link: "Exercise4.html" },
+{ title: "Exercise 5", subtitle: "Correct HTML errors", category: "Exercise", icon: "✏️", link: "Exercise5.html" },
+{ title: "Exercise 6", subtitle: "HTML best practices", category: "Exercise", icon: "✏️", link: "Exercise6.html" },
+{ title: "Exercise 7", subtitle: "Create a healthy lifestyle webpage", category: "Exercise", icon: "✏️", link: "Exercise7.html" },
+{ title: "Exercise 8", subtitle: "Create a personal portfolio website", category: "Exercise", icon: "✏️", link: "Exercise8.html" },
+
+      { title: "Progress 1", subtitle: "Module 1 progress dashboard", category: "Progress", icon: "📊", link: "progress1.html" },
+      { title: "Progress 2", subtitle: "Module 2 progress dashboard", category: "Progress", icon: "📊", link: "progress2.html" },
+      { title: "Progress 3", subtitle: "Module 3 progress dashboard", category: "Progress", icon: "📊", link: "progress3.html" },
+      { title: "Progress 4", subtitle: "Module 4 progress dashboard", category: "Progress", icon: "📊", link: "progress4.html" },
+      { title: "Progress 5", subtitle: "Module 5 progress dashboard", category: "Progress", icon: "📊", link: "progress5.html" },
+      { title: "Progress 6", subtitle: "Module 6 progress dashboard", category: "Progress", icon: "📊", link: "progress6.html" },
+      { title: "Progress 7", subtitle: "Module 7 progress dashboard", category: "Progress", icon: "📊", link: "progress7.html" },
+      { title: "Progress 8", subtitle: "Module 8 progress dashboard", category: "Progress", icon: "📊", link: "progress8.html" },
+
+      { title: "Game", subtitle: "Interactive quiz game", category: "Game", icon: "🎮", link: "game (2).html" }
+    ];
+
+    searchInput.addEventListener("keyup", function () {
+      const searchText = searchInput.value.toLowerCase().trim();
+      filterTable(searchText);
+      showSearchResults(searchText);
+    });
+
+    function filterTable(searchText) {
+      tableRows.forEach(function (row) {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchText) ? "" : "none";
+      });
+    }
+
+    function showSearchResults(searchText) {
+      searchResults.innerHTML = "";
+
+      if (searchText === "") {
+        searchResults.classList.remove("show");
+        return;
+      }
+
+      const filteredData = searchData.filter(function (item) {
+        return item.title.toLowerCase().includes(searchText) ||
+               item.subtitle.toLowerCase().includes(searchText) ||
+               item.category.toLowerCase().includes(searchText);
+      });
+
+      if (filteredData.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        searchResults.classList.add("show");
+        return;
+      }
+
+      filteredData.forEach(function (item) {
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("search-item");
+
+        resultItem.innerHTML = `
+          <div class="search-item-icon">${item.icon}</div>
+          <div>
+            <div class="search-item-title">${item.title}</div>
+            <div class="search-item-sub">${item.subtitle}</div>
+          </div>
+          <div class="search-item-category">${item.category}</div>
+        `;
+
+        resultItem.addEventListener("click", function () {
+          window.location.href = item.link;
+        });
+
+        searchResults.appendChild(resultItem);
+      });
+
+      searchResults.classList.add("show");
+    }
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".search-container")) {
+        searchResults.classList.remove("show");
+      }
+    });
+  </script>
+
+  <script>
+    function getSavedStudentProgress() {
+      const defaultProgress = {
+        overallProgress: 70,
+        completedExercises: 24,
+        totalExercises: 30,
+        averageScore: 85,
+
+        moduleProgress: {
+          module1: 100,
+          module2: 80,
+          module3: 75,
+          module4: 90,
+          module5: 60,
+          module6: 67,
+          module7: 95,
+          module8: 59
+        },
+
+        quizProgress: {
+          completedQuiz: 4,
+          totalQuiz: 5,
+          currentQuizProgress: 80,
+          averageQuizScore: 89
+        }
+      };
+
+      const savedData = localStorage.getItem("studentProgress");
+
+      if (savedData) {
+        const savedProgress = JSON.parse(savedData);
+
+        return {
+          ...defaultProgress,
+          ...savedProgress,
+          moduleProgress: {
+            ...defaultProgress.moduleProgress,
+            ...savedProgress.moduleProgress
+          },
+          quizProgress: {
+            ...defaultProgress.quizProgress,
+            ...savedProgress.quizProgress
+          }
+        };
+      }
+
+      return defaultProgress;
+    }
+
+    function updateProgressDashboard() {
+      const progress = getSavedStudentProgress();
+
+      const overallCircle = document.querySelector(".circle");
+      const overallText = document.querySelector(".circle span");
+
+      overallText.textContent = progress.overallProgress + "%";
+      overallCircle.style.background =
+        `conic-gradient(#6fd154 ${progress.overallProgress}%, #e6e6e6 0)`;
+
+      const completedExerciseText = document.querySelector(".small-card:nth-child(2) .big-number");
+      const completedExerciseBar = document.querySelector(".small-card:nth-child(2) .progress-fill");
+      const completedExercisePercent = document.querySelector(".small-card:nth-child(2) .muted-text");
+
+      const exercisePercent = Math.round(
+        (progress.completedExercises / progress.totalExercises) * 100
+      );
+
+      completedExerciseText.textContent =
+        progress.completedExercises + " / " + progress.totalExercises;
+
+      completedExerciseBar.style.width = exercisePercent + "%";
+      completedExercisePercent.textContent = exercisePercent + "% completed";
+
+      const averageScoreText = document.querySelector(".small-card:nth-child(3) .big-number");
+      averageScoreText.textContent = progress.averageScore;
+
+      const moduleRows = document.querySelectorAll(".module-progress .progress-row");
+
+      const moduleValues = [
+        progress.moduleProgress.module1,
+        progress.moduleProgress.module2,
+        progress.moduleProgress.module3,
+        progress.moduleProgress.module4,
+        progress.moduleProgress.module5,
+        progress.moduleProgress.module6,
+        progress.moduleProgress.module7,
+        progress.moduleProgress.module8
+      ];
+
+      moduleRows.forEach(function(row, index) {
+        const bar = row.querySelector(".progress-fill");
+        const percentText = row.querySelector(".percent");
+
+        bar.style.width = moduleValues[index] + "%";
+        percentText.textContent = moduleValues[index] + "%";
+      });
+
+      const quizNumber = document.querySelector(".quiz-card .big-number");
+      const quizBar = document.querySelector(".quiz-card .progress-fill");
+      const quizScore = document.querySelector(".quiz-score strong");
+
+      quizNumber.innerHTML =
+        progress.quizProgress.completedQuiz +
+        " / " +
+        progress.quizProgress.totalQuiz +
+        ' <span style="font-size: 14px; font-weight: normal;">completed</span>';
+
+      quizBar.style.width = progress.quizProgress.currentQuizProgress + "%";
+      quizScore.textContent = progress.quizProgress.averageQuizScore + "%";
+    }
+
+    updateProgressDashboard();
+  </script>
+
+</body>
+</html>

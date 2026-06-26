@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Exercise 2</title>
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(to bottom,#efd4f2,#d8b3df);
+    min-height:100vh;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar{
+    width:100%;
+    height:75px;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 40px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#ff66b3;
+}
+
+/* MENU */
+
+.menu{
+    display:flex;
+    gap:45px;
+    align-items:center;
+}
+
+.menu a{
+    text-decoration:none;
+    color:#222;
+    font-size:18px;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.menu a:hover{
+    color:#ff66b3;
+}
+
+/* ================= DROPDOWN ================= */
+
+.dropdown{
+    position:relative;
+}
+
+.dropdown-btn{
+    cursor:pointer;
+    font-size:18px;
+    font-weight:600;
+    color:#222;
+    transition:0.3s;
+}
+
+.dropdown-btn:hover{
+    color:#ff66b3;
+}
+
+/* DROPDOWN MENU */
+
+.dropdown-content{
+    position:absolute;
+    top:40px;
+    left:0;
+    width:220px;
+    background:white;
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(10px);
+    transition:0.3s;
+
+    z-index:9999;
+}
+
+.dropdown:hover .dropdown-content{
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+}
+
+.dropdown-content a{
+    display:block;
+    padding:15px 20px;
+    text-decoration:none;
+    color:#333;
+    font-weight:500;
+    transition:0.3s;
+}
+
+.dropdown-content a:hover{
+    background:#f8d9f0;
+    color:#ff66b3;
+    padding-left:28px;
+}
+
+/* ================= SEARCH ================= */
+
+/* ================= SEARCH RESULTS STYLES ================= */
+
+.search-container {
+    position: relative;
+}
+
+.search-results {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 350px;
+    max-height: 450px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    overflow-y: auto;
+    z-index: 10000;
+    display: none;
+}
+
+.search-results.show {
+    display: block;
+}
+
+.search-item {
+    padding: 12px 18px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.search-item:hover {
+    background: #f8d9f0;
+}
+
+.search-item-icon {
+    font-size: 22px;
+}
+
+.search-item-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+}
+
+.search-item-sub {
+    font-size: 11px;
+    color: #888;
+}
+
+.search-item-category {
+    font-size: 10px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background: #ff66b3;
+    color: white;
+    margin-left: auto;
+    font-weight: 600;
+}
+
+.no-results {
+    padding: 25px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Responsive */
+@media(max-width: 900px){
+    .search-results {
+        width: 300px;
+        right: -20px;
+    }
+    
+    .search-item-title {
+        font-size: 12px;
+    }
+}
+
+.search-box{
+    background:white;
+    border:2px solid black;
+    border-radius:40px;
+    padding:10px 20px;
+    width:230px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    width:100%;
+    font-size:16px;
+}
+
+.search-icon{
+    font-size:20px;
+}
+
+/* PAGE */
+
+.container{
+    padding:40px;
+}
+
+.title{
+    font-size:70px;
+    font-weight:900;
+    margin-bottom:30px;
+}
+
+.exercise-wrapper{
+    background:#ead3ea;
+    border-radius:35px;
+    padding:30px;
+}
+
+.exercise-card{
+    background:#f3b8df;
+    border-radius:30px;
+    overflow:hidden;
+}
+
+.exercise-top{
+    height:60px;
+    background:#eaa6cf;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding-left:20px;
+}
+
+.dot{
+    width:16px;
+    height:16px;
+    border-radius:50%;
+    background:white;
+}
+
+.exercise-content{
+    background:#f5f5f5;
+    padding:40px;
+    min-height:650px;
+}
+
+/* SLIDER */
+
+.slider-container{
+    width:100%;
+    overflow:hidden;
+}
+
+.slider{
+    display:flex;
+    flex-direction:row;
+    transition:transform 0.8s ease;
+}
+
+.slide{
+    min-width:100%;
+}
+
+/* GAME */
+
+.game-box{
+    background:white;
+    width:850px;
+    margin:auto;
+    padding:35px;
+    border-radius:20px;
+}
+
+.instruction{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+    color:#ff3b5f;
+    margin-bottom:35px;
+}
+
+.question{
+    margin-bottom:30px;
+    font-size:24px;
+    font-weight:bold;
+}
+
+.answers{
+    display:flex;
+    gap:20px;
+    margin-top:15px;
+}
+
+.answer-btn{
+    padding:12px 30px;
+    border:none;
+    border-radius:12px;
+    background:#ffb6dc;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.answer-btn:hover{
+    background:#ff69b4;
+    color:white;
+}
+
+.input-box{
+    width:100%;
+    padding:18px;
+    border-radius:12px;
+    border:3px solid #ddd;
+    font-size:20px;
+    margin-top:15px;
+}
+
+.submit-btn{
+    margin-top:40px;
+    padding:18px 40px;
+    border:none;
+    border-radius:15px;
+    background:#ff69b4;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.success{
+    display:none;
+    margin-top:30px;
+    color:green;
+    font-size:28px;
+    font-weight:bold;
+    text-align:center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <div class="logo">CodeBuddy HTML</div>
+
+    <div class="menu">
+
+        <a href="MAINPAGE.html">Introduction</a>
+
+
+<!----------- MODULE DROPDOWN ------------>
+
+        <div class="dropdown">
+
+            <div class="dropdown-btn">
+                Module ▼
+            </div>
+
+            <div class="dropdown-content">
+                <a href="index.html">Module 1</a>
+<a href="page2.html">Module 2</a>
+<a href="page3.html">Module 3</a>
+<a href="page4.html">Module 4</a>
+<a href="page5.html">Module 5</a>
+<a href="page6.html">Module 6</a>
+<a href="page7.html">Module 7</a>
+<a href="page8.html">Module 8</a>
+
+            </div>
+
+        </div>
+
+<!---------- EXERCISE DROPDOWN ----------->
+
+        <div class="dropdown">
+
+            <div class="dropdown-btn">
+                Exercise ▼
+            </div>
+
+            <div class="dropdown-content">
+                <a href="Exercise1.html">Exercise 1</a>
+                <a href="Exercise 2.html">Exercise 2</a>
+				<a href="Exercise3.html">Exercise 3</a>
+				<a href="Exercise4.html">Exercise 4</a>
+				<a href="Exercise5.html">Exercise 5</a>
+				<a href="Exercise6.html">Exercise 6</a>
+				<a href="Exercise7.html">Exercise 7</a>
+				<a href="Exercise8.html">Exercise 8</a>
+            </div>
+
+        </div>
+
+<!--------- PROGRESS DROPDOWN ----------->
+
+        <div class="dropdown">
+
+            <div class="dropdown-btn">
+                Progress ▼
+            </div>
+
+            <div class="dropdown-content">
+                <a href="progress1.html">Progress 1</a>
+          <a href="progress2.html">Progress 2</a>
+          <a href="progress3.html">Progress 3</a>
+          <a href="progress4.html">Progress 4</a>
+          <a href="progress5.html">Progress 5</a>
+          <a href="progress6.html">Progress 6</a>
+          <a href="progress7.html">Progress 7</a>
+          <a href="progress8.html">Progress 8</a>
+
+            </div>
+
+        </div>
+
+<!----------- Game ----------------!>
+
+		<a href="game (2).html">Game</a>
+
+        
+    </div>
+
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search">
+        <span class="search-icon">🔍</span>
+      </div>
+      <div id="searchResults" class="search-results"></div>
+    </div>
+
+</div>
+
+<div class="slider-container">
+
+<div class="slider" id="slider">
+
+<!----- QUESTION 1 -->
+
+<div class="slide">
+
+<div class="container">
+
+<div class="title">EXERCISE 2</div>
+
+<div class="exercise-wrapper">
+
+<div class="exercise-card">
+
+<div class="exercise-top">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+
+<div class="exercise-content">
+
+<div class="game-box">
+
+<div class="instruction">
+True or False
+</div>
+
+<div class="question">
+1. GUI uses icons and buttons.
+<div class="answers">
+<button class="answer-btn correct">True</button>
+<button class="answer-btn">False</button>
+</div>
+</div>
+
+<div class="question">
+2. Interactive systems only provide output.
+<div class="answers">
+<button class="answer-btn">True</button>
+<button class="answer-btn correct">False</button>
+</div>
+</div>
+
+<div class="question">
+3. Widgets are part of GUI.
+<div class="answers">
+<button class="answer-btn correct">True</button>
+<button class="answer-btn">False</button>
+</div>
+</div>
+
+<div class="question">
+4. Programming helps computers perform tasks.
+<div class="answers">
+<button class="answer-btn correct">True</button>
+<button class="answer-btn">False</button>
+</div>
+</div>
+
+<div class="success" id="success5">
+🎉 Exercise 5 Completed!
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!------ QUESTION 2 -------->
+
+<div class="slide">
+
+<div class="container">
+
+<div class="title">EXERCISE 2</div>
+
+<div class="exercise-wrapper">
+
+<div class="exercise-card">
+
+<div class="exercise-top">
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+</div>
+
+<div class="exercise-content">
+
+<div class="game-box">
+
+<div class="instruction">
+Fill in the Blank
+</div>
+
+<div class="question">
+1. HCI stands for:
+<input type="text" class="input-box" id="q1">
+</div>
+
+<div class="question">
+2. GUI means ______ User Interface.
+<input type="text" class="input-box" id="q2">
+</div>
+
+<div class="question">
+3. Widgets are also called ______ gadgets.
+<input type="text" class="input-box" id="q3">
+</div>
+
+<div class="question">
+4. A system that interacts with users is called an ______ system.
+<input type="text" class="input-box" id="q4">
+</div>
+
+<button class="submit-btn" onclick="checkAnswers()">
+Submit
+</button>
+
+<div class="success" id="success6">
+🎉 Excellent! Exercise 6 Completed!
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+let answeredQuestions = 0;
+let firstStageScore = 0;
+let firstStagePassed = false;
+
+function markExercise2Completed() {
+  let progress = {};
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (savedData && typeof savedData === "object") {
+      progress = savedData;
+    }
+  } catch (error) {
+    progress = {};
+  }
+
+  const completedIds = Array.isArray(
+    progress.completedExerciseIds
+  )
+    ? progress.completedExerciseIds
+    : [];
+
+  if (!completedIds.includes("exercise2")) {
+    completedIds.push("exercise2");
+  }
+
+  progress.completedExerciseIds = completedIds;
+  progress.completedExercises = completedIds.length;
+  progress.totalExercises = 8;
+
+  progress.exerciseResults = {
+  ...(progress.exerciseResults || {}),
+  exercise2: {
+    score: 100,
+    completedAt: new Date().toISOString()
+  }
+};
+
+  localStorage.setItem(
+    "studentProgress",
+    JSON.stringify(progress)
+  );
+}
+
+/* TRUE OR FALSE */
+
+const allButtons = document.querySelectorAll(".answer-btn");
+
+allButtons.forEach(function(button) {
+  button.addEventListener("click", function() {
+    const parent = button.parentElement;
+
+    if (parent.classList.contains("answered")) {
+      return;
+    }
+
+    parent.classList.add("answered");
+    answeredQuestions++;
+
+    if (button.classList.contains("correct")) {
+      button.style.background = "green";
+      button.style.color = "white";
+      firstStageScore++;
+    } else {
+      button.style.background = "red";
+      button.style.color = "white";
+
+      parent.querySelector(".correct").style.background = "green";
+      parent.querySelector(".correct").style.color = "white";
+    }
+
+    if (answeredQuestions === 4) {
+      const success5 = document.getElementById("success5");
+
+      success5.style.display = "block";
+
+      if (firstStageScore === 4) {
+        firstStagePassed = true;
+
+        success5.innerHTML =
+          "🎉 Perfect! Your Score: 4/4";
+
+        setTimeout(function() {
+          document.getElementById("slider").style.transform =
+            "translateX(-100%)";
+        }, 1200);
+
+      } else {
+        success5.innerHTML = `
+          🎉 Your Score: ${firstStageScore}/4
+
+          <br><br>
+
+          ❌ Please Try Again
+
+          <br><br>
+
+          <button id="retryBtn"
+          style="
+            padding:14px 30px;
+            border:none;
+            border-radius:12px;
+            background:#ff69b4;
+            color:white;
+            font-size:20px;
+            font-weight:bold;
+            cursor:pointer;
+          ">
+            Try Again
+          </button>
+        `;
+
+        document.getElementById("retryBtn")
+          .addEventListener("click", function() {
+            location.reload();
+          });
+      }
+    }
+  });
+});
+
+/* FILL IN THE BLANK */
+
+function resetQuestion2() {
+  const inputIds = ["q1", "q2", "q3", "q4"];
+
+  inputIds.forEach(function(id) {
+    const input = document.getElementById(id);
+
+    input.value = "";
+    input.style.border = "3px solid #ddd";
+  });
+
+  document.getElementById("success6").style.display = "none";
+}
+
+function checkAnswers() {
+  if (!firstStagePassed) {
+    return;
+  }
+
+  let finalScore = 0;
+
+  const q1 = document.getElementById("q1");
+  const q2 = document.getElementById("q2");
+  const q3 = document.getElementById("q3");
+  const q4 = document.getElementById("q4");
+
+  const a1 = q1.value.toLowerCase().trim();
+  const a2 = q2.value.toLowerCase().trim();
+  const a3 = q3.value.toLowerCase().trim();
+  const a4 = q4.value.toLowerCase().trim();
+
+  if (a1 === "human computer interaction") {
+    q1.style.border = "3px solid green";
+    finalScore++;
+  } else {
+    q1.style.border = "3px solid red";
+    q1.value = "Correct Answer: Human Computer Interaction";
+  }
+
+  if (a2 === "graphical") {
+    q2.style.border = "3px solid green";
+    finalScore++;
+  } else {
+    q2.style.border = "3px solid red";
+    q2.value = "Correct Answer: Graphical";
+  }
+
+  if (a3 === "window") {
+    q3.style.border = "3px solid green";
+    finalScore++;
+  } else {
+    q3.style.border = "3px solid red";
+    q3.value = "Correct Answer: Window";
+  }
+
+  if (a4 === "interactive") {
+    q4.style.border = "3px solid green";
+    finalScore++;
+  } else {
+    q4.style.border = "3px solid red";
+    q4.value = "Correct Answer: Interactive";
+  }
+
+  const success6 = document.getElementById("success6");
+  success6.style.display = "block";
+
+  if (finalScore === 4) {
+    markExercise2Completed();
+
+    success6.innerHTML =
+      "🎉 Perfect! Your Score: 4/4";
+
+  } else {
+    success6.innerHTML = `
+      🎉 Your Score: ${finalScore}/4
+
+      <br><br>
+
+      ❌ Please Try Again
+
+      <br><br>
+
+      <button id="retryBtn6"
+      style="
+        padding:14px 30px;
+        border:none;
+        border-radius:12px;
+        background:#ff69b4;
+        color:white;
+        font-size:20px;
+        font-weight:bold;
+        cursor:pointer;
+      ">
+        Try Again
+      </button>
+    `;
+
+    document.getElementById("retryBtn6")
+      .addEventListener("click", function() {
+        resetQuestion2();
+      });
+  }
+}
+</script>
+
+
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+    const searchInput = document.getElementById("searchInput");
+    const searchResults = document.getElementById("searchResults");
+    const tableRows = document.querySelectorAll("tbody tr");
+
+    const searchData = [
+
+{ title: "Introduction", subtitle: "Start learning HTML basics", category: "Introduction", icon: "🏠", link: "MAINPAGE.html" },
+
+      { title: "Module 1", subtitle: "Basic HTML module", category: "Module", icon: "📘", link: "index.html" },
+      { title: "Module 2", subtitle: "User Interface Programming", category: "Module", icon: "📘", link: "page2.html" },
+      { title: "Module 3", subtitle: "Peripherals", category: "Module", icon: "📘", link: "page3.html" },
+      { title: "Module 4", subtitle: "Software Architectures and MVC", category: "Module", icon: "📘", link: "page4.html" },
+      { title: "Module 5", subtitle: "Psychology and Motor Performance", category: "Module", icon: "📘", link: "page5.html" },
+      { title: "Module 6", subtitle: "Cognitive Aspects", category: "Module", icon: "📘", link: "page6.html" },
+      { title: "Module 7", subtitle: "User Centered Design", category: "Module", icon: "📘", link: "page7.html" },
+      { title: "Module 8", subtitle: "Emergent Interfaces", category: "Module", icon: "📘", link: "page8.html" },
+
+{ title: "Exercise 1", subtitle: "Basic HTML structure and tags", category: "Exercise", icon: "✏️", link: "Exercise1.html" },
+{ title: "Exercise 2", subtitle: "GUI and interactive systems", category: "Exercise", icon: "✏️", link: "Exercise 2.html" },
+{ title: "Exercise 3", subtitle: "HTML content and lists", category: "Exercise", icon: "✏️", link: "Exercise3.html" },
+{ title: "Exercise 4", subtitle: "HTML hyperlinks", category: "Exercise", icon: "✏️", link: "Exercise4.html" },
+{ title: "Exercise 5", subtitle: "Correct HTML errors", category: "Exercise", icon: "✏️", link: "Exercise5.html" },
+{ title: "Exercise 6", subtitle: "HTML best practices", category: "Exercise", icon: "✏️", link: "Exercise6.html" },
+{ title: "Exercise 7", subtitle: "Create a healthy lifestyle webpage", category: "Exercise", icon: "✏️", link: "Exercise7.html" },
+{ title: "Exercise 8", subtitle: "Create a personal portfolio website", category: "Exercise", icon: "✏️", link: "Exercise8.html" },
+
+      { title: "Progress 1", subtitle: "Module 1 progress dashboard", category: "Progress", icon: "📊", link: "progress1.html" },
+      { title: "Progress 2", subtitle: "Module 2 progress dashboard", category: "Progress", icon: "📊", link: "progress2.html" },
+      { title: "Progress 3", subtitle: "Module 3 progress dashboard", category: "Progress", icon: "📊", link: "progress3.html" },
+      { title: "Progress 4", subtitle: "Module 4 progress dashboard", category: "Progress", icon: "📊", link: "progress4.html" },
+      { title: "Progress 5", subtitle: "Module 5 progress dashboard", category: "Progress", icon: "📊", link: "progress5.html" },
+      { title: "Progress 6", subtitle: "Module 6 progress dashboard", category: "Progress", icon: "📊", link: "progress6.html" },
+      { title: "Progress 7", subtitle: "Module 7 progress dashboard", category: "Progress", icon: "📊", link: "progress7.html" },
+      { title: "Progress 8", subtitle: "Module 8 progress dashboard", category: "Progress", icon: "📊", link: "progress8.html" },
+
+      { title: "Game", subtitle: "Interactive quiz game", category: "Game", icon: "🎮", link: "game (2).html" }
+    ];
+
+    searchInput.addEventListener("keyup", function () {
+      const searchText = searchInput.value.toLowerCase().trim();
+      filterTable(searchText);
+      showSearchResults(searchText);
+    });
+
+    function filterTable(searchText) {
+      tableRows.forEach(function (row) {
+        const rowText = row.textContent.toLowerCase();
+        row.style.display = rowText.includes(searchText) ? "" : "none";
+      });
+    }
+
+    function showSearchResults(searchText) {
+      searchResults.innerHTML = "";
+
+      if (searchText === "") {
+        searchResults.classList.remove("show");
+        return;
+      }
+
+      const filteredData = searchData.filter(function (item) {
+        return item.title.toLowerCase().includes(searchText) ||
+               item.subtitle.toLowerCase().includes(searchText) ||
+               item.category.toLowerCase().includes(searchText);
+      });
+
+      if (filteredData.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+        searchResults.classList.add("show");
+        return;
+      }
+
+      filteredData.forEach(function (item) {
+        const resultItem = document.createElement("div");
+        resultItem.classList.add("search-item");
+
+        resultItem.innerHTML = `
+          <div class="search-item-icon">${item.icon}</div>
+          <div>
+            <div class="search-item-title">${item.title}</div>
+            <div class="search-item-sub">${item.subtitle}</div>
+          </div>
+          <div class="search-item-category">${item.category}</div>
+        `;
+
+        resultItem.addEventListener("click", function () {
+          window.location.href = item.link;
+        });
+
+        searchResults.appendChild(resultItem);
+      });
+
+      searchResults.classList.add("show");
+    }
+
+    document.addEventListener("click", function (event) {
+      if (!event.target.closest(".search-container")) {
+        searchResults.classList.remove("show");
+      }
+    });
+  </script>
+
+  <script src="search.js"></script>
+</body>
+</html>

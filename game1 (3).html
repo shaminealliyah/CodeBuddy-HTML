@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Master Catcher Game</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#dbe6ff;
+      overflow:hidden;
+    }
+
+    /* TOP BAR */
+
+    .top-bar{
+      width:100%;
+      background:white;
+      padding:18px 40px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      border-bottom:3px solid #d3d3d3;
+    }
+
+    .title{
+      font-size:32px;
+      font-weight:900;
+      color:#ff4a4a;
+    }
+
+    .score-board{
+      font-size:24px;
+      font-weight:bold;
+    }
+
+    /* GAME AREA */
+
+    .game-area{
+      width:100%;
+      height:90vh;
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* PLAYER */
+
+    .basket{
+      width:160px;
+      height:35px;
+      background:#ff4a4a;
+      border-radius:20px;
+      position:absolute;
+      bottom:30px;
+      left:45%;
+      border:4px solid #c92e2e;
+    }
+
+    /* FALLING TAG */
+
+    .tag{
+      width:130px;
+      height:60px;
+      background:white;
+      border:4px solid black;
+      border-radius:15px;
+      position:absolute;
+      top:0;
+      left:200px;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      font-size:28px;
+      font-weight:bold;
+    }
+
+    /* GAME OVER */
+
+    .game-over{
+      position:absolute;
+      top:50%;
+      left:50%;
+      transform:translate(-50%,-50%);
+      background:white;
+      padding:40px;
+      border-radius:20px;
+      text-align:center;
+      display:none;
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
+    }
+
+    .game-over h1{
+      font-size:50px;
+      margin-bottom:20px;
+      color:#ff4a4a;
+    }
+
+    .game-over button{
+      padding:15px 30px;
+      border:none;
+      background:#ff4a4a;
+      color:white;
+      font-size:20px;
+      border-radius:10px;
+      cursor:pointer;
+    }
+
+    .instructions{
+      position:absolute;
+      top:20px;
+      left:20px;
+      background:white;
+      padding:15px;
+      border-radius:15px;
+      font-weight:bold;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- TOP BAR -->
+
+  <div class="top-bar">
+
+    <div class="title">
+      MASTER CATCHER
+    </div>
+
+    <div class="score-board">
+      Score: <span id="score">0</span>
+    </div>
+
+  </div>
+
+  <!-- GAME AREA -->
+
+  <div class="game-area" id="gameArea">
+
+    <div class="instructions">
+      Move your mouse to catch the HTML tags!
+    </div>
+
+    <!-- CATCHER -->
+
+    <div class="basket" id="basket"></div>
+
+    <!-- FALLING TAG -->
+
+    <div class="tag" id="tag">
+      &lt;h1&gt;
+    </div>
+
+    <!-- GAME OVER -->
+
+    <div class="game-over" id="gameOver">
+
+      <h1>GAME OVER</h1>
+
+      <p style="font-size:25px; margin-bottom:20px;">
+        Final Score:
+        <span id="finalScore"></span>
+      </p>
+
+      <button onclick="restartGame()">
+        PLAY AGAIN
+      </button>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    let basket = document.getElementById("basket");
+    let tag = document.getElementById("tag");
+    let scoreText = document.getElementById("score");
+
+    let score = 0;
+
+    let tagX = Math.random() * 1000;
+    let tagY = 0;
+
+    let speed = 4;
+
+    let gameRunning = true;
+
+    // HTML TAGS
+
+    let tags = [
+
+      "&lt;h1&gt;",
+      "&lt;p&gt;",
+      "&lt;img&gt;",
+      "&lt;div&gt;",
+      "&lt;a&gt;",
+      "&lt;table&gt;",
+      "&lt;ul&gt;",
+      "&lt;li&gt;"
+
+    ];
+
+    // MOVE CATCHER
+
+    document.addEventListener("mousemove", function(e){
+
+      let x = e.clientX;
+
+      basket.style.left = (x - 80) + "px";
+
+    });
+
+    // MAIN GAME LOOP
+
+    function gameLoop(){
+
+      if(!gameRunning) return;
+
+      tagY += speed;
+
+      tag.style.top = tagY + "px";
+      tag.style.left = tagX + "px";
+
+      let basketRect = basket.getBoundingClientRect();
+      let tagRect = tag.getBoundingClientRect();
+
+      // COLLISION DETECTION
+
+      if(
+
+        tagRect.bottom >= basketRect.top &&
+        tagRect.left < basketRect.right &&
+        tagRect.right > basketRect.left
+
+      ){
+
+        score++;
+
+        scoreText.innerHTML = score;
+
+        resetTag();
+
+      }
+
+      // MISSED TAG
+
+      if(tagY > window.innerHeight){
+
+        endGame();
+
+      }
+
+      requestAnimationFrame(gameLoop);
+
+    }
+
+    // RESET TAG
+
+    function resetTag(){
+
+      tagY = 0;
+
+      tagX = Math.random() * (window.innerWidth - 150);
+
+      let randomTag =
+      tags[Math.floor(Math.random() * tags.length)];
+
+      tag.innerHTML = randomTag;
+
+      speed += 0.3;
+
+    }
+
+function saveMasterCatcherScore() {
+  let progress = {};
+
+  try {
+    const savedData = JSON.parse(
+      localStorage.getItem("studentProgress")
+    );
+
+    if (savedData && typeof savedData === "object") {
+      progress = savedData;
+    }
+  } catch (error) {
+    progress = {};
+  }
+
+  progress.arcadeProgress = {
+    ...(progress.arcadeProgress || {}),
+    masterCatcher: score
+  };
+
+  localStorage.setItem(
+    "studentProgress",
+    JSON.stringify(progress)
+  );
+}    
+
+// GAME OVER
+
+    function endGame(){
+
+      gameRunning = false;
+
+      document.getElementById("gameOver").style.display =
+      "block";
+
+      document.getElementById("finalScore").innerHTML =
+      score;
+
+      saveMasterCatcherScore();
+
+    }
+
+    // RESTART GAME
+
+    function restartGame(){
+
+      location.reload();
+
+    }
+
+    // START GAME
+
+    gameLoop();
+
+  </script>
+
+</body>
+</html>
